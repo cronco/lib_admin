@@ -6,10 +6,13 @@
 		<link rel="stylesheet" href="{% block stylesheet %}{% get_static_prefix %}css/style.css{% endblock %}" />
 	</head>
 	<body>
-		<div id="header">
+		<div id="header" class="box">
 			{% block branding %}<h1>{{library.name}}</h1> {% endblock %}
 			<nav>
 			<ul>
+				<li>
+					<a href="/catalogue/">Catalogue</a>
+				</li>
 				<li>
 					<a href="/genres/">Genres</a>
 				</li>
@@ -22,12 +25,12 @@
 			</ul>
 			</nav>
 		</div>
-		<div id="content">
+		<div id="content" class="box">
 			{% block content %}
 
 			{% endblock content %}
 		</div>
-		<div id="sidebar">
+		<div id="sidebar" class="box">
 			{% block sidebar %}
 			{% endblock sidebar %}
 		</div>

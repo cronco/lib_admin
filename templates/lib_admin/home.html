@@ -4,10 +4,19 @@
 	{% if news %}
 		{% for story in news %}
 		<article>
-			<h3>{{story.title}}</h3>
+			<h2>{{story.title}}</h2>
 			<time datetime="{{story.pub_date|date:"Y-m-d"}}">{{story.pub_date|date:"N jS Y"}}</time>
 			{{story.content|escape|linebreaks}}
 		</article>
 		{% endfor %}
 	{% endif %}
 {%endblock content %}
+
+{%block sidebar %}
+<h4>Newest additions</h4>
+	<ol>
+	{% for book in latest %}
+	<a href="{{ book.get_absolute_url }}"><li>{{book.name}}</a></li>
+	{%endfor %}
+	</ol>
+{%endblock sidebar %}
