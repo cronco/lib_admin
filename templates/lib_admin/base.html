@@ -1,10 +1,27 @@
 <!DOCTYPE html>
+{% load static %}
 <html>
 	<head>
 		<title>{% block title %}{{library.name}}{% endblock %}</title>
-		<link rel="stylesheet" href="{% block stylesheet %}{% endblock %}" />
+		<link rel="stylesheet" href="{% block stylesheet %}{% get_static_prefix %}css/style.css{% endblock %}" />
 	</head>
 	<body>
+		<div id="header">
+			{% block branding %}<h1>{{library.name}}</h1> {% endblock %}
+			<nav>
+			<ul>
+				<li>
+					<a href="/genres/">Genres</a>
+				</li>
+				<li>
+					<a href="/authors/">Authors</a>
+				</li>
+				<li>
+					<a href="/search/">Search</a>
+				</li>
+			</ul>
+			</nav>
+		</div>
 		<div id="content">
 			{% block content %}
 

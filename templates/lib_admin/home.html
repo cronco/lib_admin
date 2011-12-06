@@ -1,0 +1,13 @@
+{% extends 'lib_admin/base.html' %}
+
+{%block content %}
+	{% if news %}
+		{% for story in news %}
+		<article>
+			<h3>{{story.title}}</h3>
+			<time datetime="{{story.pub_date|date:"Y-m-d"}}">{{story.pub_date|date:"N jS Y"}}</time>
+			{{story.content|escape|linebreaks}}
+		</article>
+		{% endfor %}
+	{% endif %}
+{%endblock content %}
