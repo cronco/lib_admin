@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 
 class Author(models.Model):
 	name = models.CharField(max_length = 100)
-	bio = models.TextField(null = True, null=True)
+	bio = models.TextField(blank = True)
 
 	def __unicode__(self):
 		return self.name
@@ -28,9 +28,10 @@ class Book(models.Model):
 	pub_date = models.DateField('Publishing date', null=True)
 	copies = models.IntegerField('Number of available copies')
 	cover = models.ImageField('Book cover',upload_to = 'covers/', null=True)
+	preview = models.FileField('Book preview', upload_to = 'previews/', null=True)
 	synopsis = models.TextField('Book synopsis, description', null=True)
 	genres = models.ManyToManyField(Genre, null=True)
-	publishers = models.ManyToManyField(Publisher) 
+	publisher = models.ForeignKey(Publisher) 
 	authors = models.ManyToManyField(Author)
 
 	def __unicode__(self):
@@ -49,3 +50,9 @@ class Library(models.Model):
 	name = models.CharField('Library name', max_length = 100)
 	#maximum number of days a person can lend a book
 	max_lend_period = models.IntegerField('Maximum lending period') 
+
+class News(models.Model):
+	title = models.CharField('News Title', max_length = 200)
+	content = models.TextField('News content')
+	pub_date = models.DateField(help_text = 'Publishing date', auto_now_add = True)
+	last_edit_date = models.DateField(help_text = 'Last edit date', auto_now = True)

@@ -1,0 +1,26 @@
+{% extends "lib_admin/base.html" %}
+
+{% block title%}{{library.name}} - {{ book.name }} {% endblock %}
+
+{%block content %}
+<h1>{{book.name}}</h1>
+<h2>
+	{% if book.authors.count > 1 %}
+		{{book.authors.all|join:", " }}
+	{% else %}
+		{{ book.authors.all.0.name }}
+	{% endif %}
+</h2>
+<h3>{{book.publisher}}</h3>
+
+<div id="synopsis" class="article">{{book.synopsis|escape|linebreaks}}</div>
+
+{% endblock content %}
+
+{% block sidebar %}
+	{% if book.cover %}
+		<div class="cover">
+			<img src="{{book.cover.url}}" alt="" />
+		</div>
+	{%endif%}
+{% endblock sidebar %}
