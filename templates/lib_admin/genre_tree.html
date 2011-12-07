@@ -1,0 +1,17 @@
+
+<ul class="tree">
+{% for el in genres %}
+	<li>
+	<a href="{{ el.genre.get_absolute_url }}">{{el.genre.name}}</a>
+	{% if el.children|length %}
+		<ul class="subtree">
+		{% for child in el.children %}
+			<li>
+				<a href="{{ child.genre.get_absolute_url }}">{{child.genre.name}}</a>
+			</li>
+		{% endfor %}
+		</ul>
+	{% endif %}
+	</li>
+{% endfor %}
+</ul>

@@ -7,7 +7,7 @@
 <h2>
 	{% if book.authors.count > 1 %}
 		{% for author in book.authors.all %}
-		<a href="{{author.get_absolute_url}}">{{author.name}}</a>, 
+		<a href="{{author.get_absolute_url}}">{{author.name}}</a>{% if not forloop.last %},{% endif %} 
 		{% endfor %}
 	{% else %}
 	<a href="{{ book.authors.all.0.get_absolute_url}}">{{ book.authors.all.0.name }}</a>
@@ -36,4 +36,5 @@
 			{% endfor %}
 		</ul>
 	{% endif %}
+	{% include "lib_admin/genre_tree.html" %}
 {% endblock sidebar %}

@@ -8,21 +8,26 @@ class Author(models.Model):
 	bio = models.TextField(blank = True)
 
 	def __unicode__(self):
-		return self.last_name + ' ' + self.first_name
+		return self.first_name + ' ' + self.last_name
 
 	def name(self):
-		return self.last_name + ' ' + self.first_name
+		return self.first_name + ' ' + self.last_name
 
+	@models.permalink
 	def get_absolute_url(self):
-		return settings.BASE_URL + 'author/%i/' % self.id
+		return('author_catalogue', [str(self.id)])
 
 class Genre(models.Model):
 	name = models.CharField(max_length = 100)
 	description = models.CharField(max_length = 250, blank=True)
-	parent_genre = models.ForeignKey('self', null = True)
+	parent_genre = models.ForeignKey('self', null = True, default = 0)
 
 	def __unicode__(self):
 		return self.name
+
+	@models.permalink
+	def get_absolute_url(self):
+		return('genre_catalogue', [str(self.id)])
 
 class Publisher (models.Model):
 	name = models.CharField(max_length=100)
@@ -46,8 +51,9 @@ class Book(models.Model):
 	def __unicode__(self):
 		return self.name
 
+	@models.permalink
 	def get_absolute_url(self):
-		return settings.BASE_URL + "book/%i/" % self.id
+		return ('book', [str(self.id)])
 
 class Checkout(models.Model):
 	book = models.ForeignKey(Book)

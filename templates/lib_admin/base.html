@@ -3,7 +3,7 @@
 <html>
 	<head>
 		<title>{% block title %}{{library.name}}{% endblock %}</title>
-		<link rel="stylesheet" href="{% block stylesheet %}{% get_static_prefix %}css/style.css{% endblock %}" />
+		<link rel="stylesheet" href="{% block stylesheet %}{{ STATIC_URL }}css/style.css{% endblock %}" />
 	</head>
 	<body>
 		<div id="header" class="box">

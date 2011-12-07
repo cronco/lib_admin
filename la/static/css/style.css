@@ -21,10 +21,6 @@ table, caption, tbody, tfoot, thead, tr, th, td {
 	vertical-align: baseline;
 }
 
-
- q
-
-
 body {
 
 	line-height: 1;
@@ -137,3 +133,14 @@ nav li {
 	float:left;
 
 }
+
+.tree li {
+
+	margin: 0.2em 0;
+}
+
+.subtree > li {
+
+	margin:0.2em 0 0.2em 1em;
+
+}	
