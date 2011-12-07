@@ -3,6 +3,8 @@
 {% block title%}{{library.name}} - {{ book.name }} {% endblock %}
 
 {%block content %}
+<article class="box">
+
 <h1>{{book.name}}</h1>
 <h2>
 	{% if book.authors.count > 1 %}
@@ -21,11 +23,19 @@
 <div class="cover">
 	<img src="{{book.cover.url}}" alt="" />
 </div>
-{%endif%}
+{% endif %}
+<span><a href="{{book.get_amazon_link}}">Amazon Link</a></span>
+</article>
 
 {% endblock content %}
 
 {% block sidebar %}
+	{% if book.available %}
+<div class="lending">
+	<p>	The book is available to be lent!</p>
+	<p>Please <a href={{ log_in }}>login</a> to reserve it.</p>
+	{% endif %}
+</div>
 	{% if others_by_author %}
 		<h3>Others by same author(s)</h3>
 		<ul>
@@ -36,5 +46,4 @@
 			{% endfor %}
 		</ul>
 	{% endif %}
-	{% include "lib_admin/genre_tree.html" %}
 {% endblock sidebar %}

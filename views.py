@@ -1,8 +1,9 @@
 from django.http import HttpResponse
+from django.db.models import Q
 from django.template import RequestContext, Context, loader
 from django.shortcuts import render_to_response
 from django.utils.safestring import SafeString
-from la.models import Book, Library, News
+from la.models import *
 from la.helpers import buildGenreTree
 import datetime
 
@@ -36,10 +37,19 @@ def newsItem(request, news_id):
 def catalogue(request, author_id = 0, genre_id = 0):
 	c = RequestContext(request, dictionary)
 
-	if not author_id and not genre_id:
-		b = Book.objects.all()[10:]
+	if not author_id and not genre_id and request.method != 'POST':
+		b = Book.objects.all()[:10]
 	elif author_id:
-		b = Book.objects.filter(authors = author_id)[10:]
+		a = Author.objects.get(id = author_id)
+		c['author'] = a
+		b = Book.objects.filter(authors = author_id)[:10]
+	elif genre_id:
+		g = Genre.objects.get(id = genre_id)
+		c['genre'] = g
+		b = Book.objects.filter(genres = genre_id)[:10]
+	elif request.method == 'POST':
+		p = request.POST
+		b = Book.objects.filter(Q(name__icontains = p.get('search_string', '')) | Q(authors__last_name__icontains = p.get('search_string', '')))
 	
 	c['books'] = b
 	return render_to_response('lib_admin/catalogue.html',{}, c)

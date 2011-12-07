@@ -24,8 +24,13 @@
 				</li>
 			</ul>
 			</nav>
+			<form action="/search/" id="simple_search" method="POST">
+				{% csrf_token %}
+				<input name="search_string" type="text" placeholder="Search by author or name" />
+				<input type="submit" value="Search" />
+			</form>
 		</div>
-		<div id="content" class="box">
+		<div id="content">
 			{% block content %}
 
 			{% endblock content %}
@@ -33,6 +38,7 @@
 		<div id="sidebar" class="box">
 			{% block sidebar %}
 			{% endblock sidebar %}
+			{% include "lib_admin/genre_tree.html" %}
 		</div>
 	</body>
 </html>

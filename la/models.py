@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.conf import settings
+import isbn
 
 class Author(models.Model):
 	first_name = models.CharField('author\'s first name', max_length = 100)
@@ -54,6 +55,12 @@ class Book(models.Model):
 	@models.permalink
 	def get_absolute_url(self):
 		return ('book', [str(self.id)])
+	
+	def get_amazon_link(self):
+		return isbn.url("amazon",self.isbn)
+
+	def available(self):
+		return self.copies > Checkout.objects.filter(book = self.id, return_date = None).count()
 
 class Checkout(models.Model):
 	book = models.ForeignKey(Book)
@@ -62,7 +69,7 @@ class Checkout(models.Model):
 	return_date = models.DateTimeField(null = True, blank=True)
 
 	def __unicode__(self):
-		return self.user + ' ' + self.book
+		return self.user.username + ' ' + self.book.name
 
 class Library(models.Model):
 	name = models.CharField('library name', max_length = 100)
