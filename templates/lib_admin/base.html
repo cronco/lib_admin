@@ -7,7 +7,7 @@
 	</head>
 	<body>
 		<div id="header" class="box">
-			{% block branding %}<h1>{{library.name}}</h1>{% endblock %}
+			{% block branding %}<h1><a href="{{ base_url }}">{{library.name}}</a></h1>{% endblock %}
 			<nav>
 			<ul>
 				<li>

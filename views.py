@@ -1,5 +1,6 @@
 from django.http import HttpResponse, Http404
 from django.db.models import Q
+from django.conf import settings
 from django.template import RequestContext, Context, loader
 from django.shortcuts import render_to_response, redirect
 from django.utils.safestring import SafeString
@@ -11,7 +12,7 @@ import datetime
 l = Library.objects.get()
 latest = Book.objects.all().order_by('-add_date')[:5]
 genres = buildGenreTree()
-dictionary ={'library' : l, 'latest' : latest, 'genres' : genres }
+dictionary ={'library' : l, 'latest' : latest, 'genres' : genres, 'base_url' : settings.BASE_URL }
 
 def home(request):
 
