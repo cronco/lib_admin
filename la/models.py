@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.conf import settings
 import isbn
 
 class Author(models.Model):
@@ -16,7 +15,7 @@ class Author(models.Model):
 
 	@models.permalink
 	def get_absolute_url(self):
-		return('author_catalogue', [str(self.id)])
+		return('author', [str(self.id)])
 
 class Genre(models.Model):
 	name = models.CharField(max_length = 100)
@@ -28,7 +27,7 @@ class Genre(models.Model):
 
 	@models.permalink
 	def get_absolute_url(self):
-		return('genre_catalogue', [str(self.id)])
+		return('genre', [str(self.id)])
 
 class Publisher (models.Model):
 	name = models.CharField(max_length=100)

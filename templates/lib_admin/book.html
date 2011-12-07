@@ -4,38 +4,43 @@
 
 {%block content %}
 <article class="box">
-
-<h1>{{book.name}}</h1>
-<h2>
-	{% if book.authors.count > 1 %}
-		{% for author in book.authors.all %}
-		<a href="{{author.get_absolute_url}}">{{author.name}}</a>{% if not forloop.last %},{% endif %} 
-		{% endfor %}
-	{% else %}
-	<a href="{{ book.authors.all.0.get_absolute_url}}">{{ book.authors.all.0.name }}</a>
+	{% if book.cover %}
+	<div class="cover">
+		<img src="{{book.cover.url}}" alt="" />
+	</div>
 	{% endif %}
-</h2>
-<h3>{{book.publisher}}</h3>
-
-<div id="synopsis" class="article">{{book.synopsis|safe|linebreaks}}</div>
-
-{% if book.cover %}
-<div class="cover">
-	<img src="{{book.cover.url}}" alt="" />
-</div>
-{% endif %}
-<span><a href="{{book.get_amazon_link}}">Amazon Link</a></span>
+	<h1>{{book.name}}</h1>
+	<h2>
+		{% if book.authors.count > 1 %}
+			{% for author in book.authors.all %}
+				<a href="{{author.get_absolute_url}}">{{author.name}}</a>{% if not forloop.last %},{% endif %} 
+			{% endfor %}
+		{% else %}
+		<a href="{{ book.authors.all.0.get_absolute_url}}">{{ book.authors.all.0.name }}</a>
+		{% endif %}
+	</h2>
+	<h3>{{book.publisher}}</h3>
+	<div id="synopsis" class="article">
+		<h4>Synopsis</h4>	
+		{{book.synopsis|safe|linebreaks}}
+	</div>
+	{% if book.isbn %}
+	<span>ISBN: {{book.isbn}} - <a href="{{book.get_amazon_link}}">Amazon Link</a></span>
+	{% endif %}
 </article>
 
 {% endblock content %}
 
 {% block sidebar %}
-	{% if book.available %}
-<div class="lending">
-	<p>	The book is available to be lent!</p>
-	<p>Please <a href={{ log_in }}>login</a> to reserve it.</p>
+	{% if book.preview %}
+		<a href="{{book.preview}}" class="button_link">Download preview</a>
 	{% endif %}
-</div>
+	{% if book.available %}
+	<div class="lending">
+		<p>	The book is available to be lent!</p>
+		<p>Please <a href={{ log_in }}>login</a> to reserve it.</p>
+	</div>
+	{% endif %}
 	{% if others_by_author %}
 		<h3>Others by same author(s)</h3>
 		<ul>

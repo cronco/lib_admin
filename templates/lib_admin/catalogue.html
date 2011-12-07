@@ -17,8 +17,26 @@
 	</article>
 		{% endif %}
 	{% endif %}
+
+	{% if search %}
+	<div class="box">
+		{% if looks_like_isbn and not isbn %}
+		<p>
+			We are sorry. It seems you are trying to search by an ISBN code ({{search}}), but it is not valid.
+		</p>
+		{% else %}
+			{% if isbn and not books %}
+			<p>We are sorry, we don't seem to have the book with the specified ISBN ({{search}}).</p>
+			{% endif %}	
+		{% endif %}	
+		<p>
+			Here are the results for your search for {{search}}.
+		</p>
+	</div>
+	{% endif %}
+
 	{% if books %}
-	{% for book  in books %}
+	{% for book in books %}
 	<article class="box">
 		<h2>
 			<a href="{{book.get_absolute_url}}">{{book.name}}</a>

@@ -28,7 +28,6 @@ body {
 }
 h1, h2, h3, h4, h5, h6 {
 
-	clear: both;
 	font-weight: normal;
 
 }
@@ -66,6 +65,9 @@ a {
  * color3: #D4FFFD
  * color4: #DB9655
  * color5: #DE6A00
+ *
+ *
+ * General stuff
  */
 
 body {
@@ -77,20 +79,41 @@ a {
 	color: #DB9655;
 }
 
+a.button_link {
+
+	background: #DE6A00;
+	color: #D4FFFD;
+	padding: 0.9em;
+	border-radius: 5px;
+	font-size: 1.3em;
+	display: block;
+	margin-bottom: 0.5em;
+	line-height: 1.3em;
+	text-align: center;
+
+
+}
+
+.button_link:visited {
+
+	color:#7E9899;
+
+}
+
 a:visited {
 	color:#DE6A00;
 }
 
 h1 {
 
-	margin-bottom:0.5em;
+	margin-bottom:0.3em;
 	font-size:2em;
 }
 
 h2 {
 
 	font-size:1.6em;
-	margin-bottom:0.3em;
+	margin-bottom:0.2em;
 
 }
 
@@ -114,10 +137,9 @@ time {
 
 }
 
-article {
-
-
-}
+/**
+ *  Header stuff
+ */
 
 nav li {
 	display: inline-block;
@@ -146,6 +168,10 @@ nav li {
 
 }
 
+/**
+ * Content stuffs
+ */
+
 .box {
 
 	background:#203E42;
@@ -162,6 +188,31 @@ nav li {
 	float:left;
 
 }
+
+
+article {
+
+
+}
+
+.article {
+
+	clear:both;
+	padding-left: 4em;
+	margin:1em 0;
+
+}
+
+.cover {
+
+	float:left;
+	margin:0 1em 1em 0;
+
+}
+
+/**
+ *  Sidebar
+ */
 
 #sidebar {
 
