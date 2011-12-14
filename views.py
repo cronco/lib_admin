@@ -114,6 +114,10 @@ def catalogue(request, author_id = 0, genre_id = 0, page_no = 1):
 	return render_to_response('lib_admin/catalogue.html',{}, c)
 
 def login_view(request):
+	"""
+	Displays a login form and logs user in if form data
+	is sent through POST
+	"""
 	c = RequestContext(request, dictionary)
 	if request.method == "POST":
 		form = AuthenticationForm(data = request.POST)

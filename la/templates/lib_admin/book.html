@@ -1,4 +1,4 @@
-{% extends "lib_admin/base.html" %}
+{% extends "lib_admin/base_front.html" %}
 
 {% block title%}{{library.name}} - {{ book.name }} {% endblock %}
 
@@ -62,4 +62,5 @@
 			{% endfor %}
 		</ul>
 	{% endif %}
+{{ block.super }}
 {% endblock sidebar %}

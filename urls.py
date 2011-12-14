@@ -7,6 +7,8 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('lib_admin.views',
+	# The main views, for displayin books, authors, 
+	# for the front
      url(r'^$', 'home', name='home'),
 	 url(r'^book/(?P<book_id>\d+)/?$','book', name='book'),
 	 url(r'^catalogue/$', 'catalogue'),
@@ -20,9 +22,11 @@ urlpatterns = patterns('lib_admin.views',
 	 url(r'^search(/(?P<page_no>\d+)?)?$', 'catalogue', name='search'),
 	 url(r'^news/(?P<news_id>\d+)/?$', 'news_item'),
 	
-	# The admin parts follows here
+	# The user parts follow here
 	 url(r'^login/?$', 'login_view', name='login'),
 	 url(r'^logout/?$', 'logout_view', name='logout'),
+	 url(r'^my-checkouts/?$', 'user_checkouts', name='my-checkouts'),
+	# Finally, admin stuff
 	 url(r'^admins/?$', 'admin', name='admin'),
 	 
     # url(r'^lib_admin/', include('lib_admin.foo.urls')),
