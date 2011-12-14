@@ -14,9 +14,6 @@
 					<a href="/catalogue/">Catalogue</a>
 				</li>
 				<li>
-					<a href="/genres/">Genres</a>
-				</li>
-				<li>
 					<a href="/authors/">Authors</a>
 				</li>
 				<li>
@@ -24,9 +21,15 @@
 				</li>
 			</ul>
 			</nav>
-			<form action="/search/" id="simple_search" method="POST">
-				{% csrf_token %}
-				<input name="search_string" type="text" placeholder="Search by ISBN, author or name" value="{{search}}"/>
+			<div id="user_status">
+				{% if user.is_authenticated %}
+					Hello, {{ user.first_name }}
+				{% else %}
+				Please <a href="{% url login %}">login</a> to reserve books.
+				{% endif %}
+			</div>
+			<form action="/search/" id="simple_search" method="GET">
+				<input name="search" type="text" placeholder="Search by ISBN, author or name" value="{{search}}"/>
 				<input type="submit" value="Search" />
 			</form>
 		</div>

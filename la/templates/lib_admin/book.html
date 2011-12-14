@@ -32,13 +32,24 @@
 {% endblock content %}
 
 {% block sidebar %}
-	{% if book.preview %}
+	{% if book.preview and user.is_authenticated %}
 		<a href="{{book.preview}}" class="button_link">Download preview</a>
+		{% else %}
+		{%	if user.is_anonymous %}
+		<p>Please <a href={{ log_in }}>login</a> to download preview.</p>
+		{% endif %}
 	{% endif %}
 	{% if book.available %}
 	<div class="lending">
 		<p>	The book is available to be lent!</p>
+		{% if perms.la.checkout_book %}
+		<p><a href="">Reserve</a> this book.</p>
+		{% else %}
+			{% if user.is_authenticated and not perms.la_checkout_book %}
+			<p>You cannot reserve a book until you return your overdue books.</p>
+			{% endif %}
 		<p>Please <a href={{ log_in }}>login</a> to reserve it.</p>
+		{% endif %}
 	</div>
 	{% endif %}
 	{% if others_by_author %}

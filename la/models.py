@@ -15,7 +15,7 @@ class Author(models.Model):
 
 	@models.permalink
 	def get_absolute_url(self):
-		return('author', [str(self.id)])
+		return('author', [str(self.id), 1])
 
 class Genre(models.Model):
 	name = models.CharField(max_length = 100)
@@ -66,6 +66,11 @@ class Checkout(models.Model):
 	user = models.ForeignKey(User)
 	checkout_date = models.DateTimeField(auto_now_add = True)
 	return_date = models.DateTimeField(null = True, blank=True)
+	class Meta:
+
+		permissions = (
+				("checkout_book", "Can checkout a book"),
+				)
 
 	def __unicode__(self):
 		return self.user.username + ' ' + self.book.name
@@ -83,3 +88,7 @@ class News(models.Model):
 	content = models.TextField('News content')
 	pub_date = models.DateField(help_text = 'Publishing date', auto_now_add = True)
 	last_edit_date = models.DateField(help_text = 'Last edit date', auto_now = True)
+
+	@models.permalink
+	def get_absolute_url(self):
+		return('news_item', [str(self.id)])

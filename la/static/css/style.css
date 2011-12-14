@@ -168,6 +168,14 @@ nav li {
 
 }
 
+#user_status {
+
+	position: absolute;
+	right: 5%;
+	top: 10%;
+
+}
+
 /**
  * Content stuffs
  */

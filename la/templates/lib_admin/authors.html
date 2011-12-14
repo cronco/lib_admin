@@ -1,0 +1,31 @@
+{% extends "lib_admin/base.html" %}
+{% load lib_extras %}
+
+{% block content %}
+{% for author in authors.object_list %}
+	{% ifchanged author.last_name|first %}
+	<a href="#{{author.last_name|first|lower}}">
+		{{author.last_name|first}}
+	</a>
+	{% endifchanged %}
+{% endfor %}
+
+{% for author in authors.object_list %}
+	{% ifchanged author.last_name|first %}
+		<div id="{{ author.last_name|first|lower }}" class="box">
+			<h2>{{author.last_name|first }}</h2>
+	{% endifchanged %}
+
+		<article class="box">
+		<a href="{{author.get_absolute_url}}">{{author.name}}</a>
+		</article>
+
+	{% ifchanged author.last_name|first %}
+		</div>
+	{% endifchanged %}
+{% endfor %}
+<div class="box pagination">
+	{% paginate authors "prev" request context %}
+	{% paginate authors "next" request context %}
+</div>
+{% endblock content %}

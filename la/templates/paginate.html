@@ -1,0 +1,25 @@
+{% if page == 'next' %}
+	{% if pages.has_next %}
+	<a href="{{BASE_URL}}/{{context}}/{{pages.next_page_number}}
+		{% if request.GET.search %}
+		?search={{request.GET.search}}
+		{% endif %}
+		">Next page</a>
+	{% endif %}
+{% else %}
+	{% if page == 'prev' %}
+		{% if pages.has_previous %}
+		<a href="{{BASE_URL}}/{{context}}/{{pages.previous_page_number}}
+			{% if request.GET.search %}
+			?search={{request.GET.search}}
+			{% endif %}
+			">Previous page</a>
+		{% endif%}
+	{% else %}
+		<a href="{{BASE_URL}}/{{context}}/page
+			{% if request.GET.search %}
+			?search={{request.GET.search}}
+			{% endif %}
+			">{{page}}</a>
+	{% endif %}
+{% endif %}
