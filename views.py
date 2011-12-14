@@ -134,3 +134,7 @@ def login_view(request):
 def logout_view(request):
 	logout(request)
 	return redirect('home')
+
+def admin(request):
+	c = RequestContext(request, dictionary)
+	return render_to_response('lib_admin/admin.html', {}, c)

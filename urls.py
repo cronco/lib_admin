@@ -19,8 +19,11 @@ urlpatterns = patterns('lib_admin.views',
 	 url(r'^search/?$', 'catalogue'),
 	 url(r'^search(/(?P<page_no>\d+)?)?$', 'catalogue', name='search'),
 	 url(r'^news/(?P<news_id>\d+)/?$', 'news_item'),
+	
+	# The admin parts follows here
 	 url(r'^login/?$', 'login_view', name='login'),
 	 url(r'^logout/?$', 'logout_view', name='logout'),
+	 url(r'^admins/?$', 'admin', name='admin'),
 	 
     # url(r'^lib_admin/', include('lib_admin.foo.urls')),
 
