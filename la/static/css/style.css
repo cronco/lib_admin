@@ -190,6 +190,13 @@ nav li {
 
 }
 
+.inner {
+
+	border: 1px solid #DB9655;
+	margin-bottom:1%;
+
+}
+
 #content {
 
 	width:70%;

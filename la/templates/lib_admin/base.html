@@ -9,21 +9,24 @@
 		<div id="header" class="box">
 			{% block branding %}<h1><a href="{{ base_url }}">{{library.name}}</a></h1>{% endblock %}
 			<nav>
-			<ul>
-				<li>
-					<a href="/catalogue/">Catalogue</a>
-				</li>
-				<li>
-					<a href="/authors/">Authors</a>
-				</li>
-				<li>
-					<a href="/search/">Search</a>
-				</li>
-			</ul>
+				<ul>
+					<li>
+						<a href="/catalogue/">Catalogue</a>
+					</li>
+					<li>
+						<a href="/authors/">Authors</a>
+					</li>
+					<li>
+						<a href="/search/">Search</a>
+					</li>
+				{% block nav %}
+				{%endblock %}
+				</ul>
 			</nav>
 			<div id="user_status">
 				{% if user.is_authenticated %}
-					Hello, {{ user.first_name }}
+				Hello, {{ user.first_name }}.
+				<a href="{% url logout %}">Logout</a>
 				{% else %}
 				Please <a href="{% url login %}">login</a> to reserve books.
 				{% endif %}
