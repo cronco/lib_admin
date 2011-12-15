@@ -139,6 +139,12 @@ def logout_view(request):
 	logout(request)
 	return redirect('home')
 
+def user_checkouts(request):
+	c = RequestContext(request, dictionary)
+	checkouts = Checkout.objects.filter(user = request.user.id).order_by('-checkout_date')
+	c['checkouts'] = checkouts
+	return render_to_response('lib_admin/checkouts.html', {}, c)
+
 def admin(request):
 	c = RequestContext(request, dictionary)
 	return render_to_response('lib_admin/admin.html', {}, c)

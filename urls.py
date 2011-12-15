@@ -25,7 +25,7 @@ urlpatterns = patterns('lib_admin.views',
 	# The user parts follow here
 	 url(r'^login/?$', 'login_view', name='login'),
 	 url(r'^logout/?$', 'logout_view', name='logout'),
-	 url(r'^my-checkouts/?$', 'user_checkouts', name='my-checkouts'),
+	 url(r'^my-checkouts/?$', 'user_checkouts', name='user_checkouts'),
 	# Finally, admin stuff
 	 url(r'^admins/?$', 'admin', name='admin'),
 	 

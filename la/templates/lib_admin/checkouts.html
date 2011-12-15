@@ -1,0 +1,19 @@
+{% extends "lib_admin/base_front.html" %}
+
+{% block content %}
+	{% for checkout in checkouts %}
+
+		{% ifchanged checkout.checkout_date %}
+		<div class="box">
+			<h3>Checked out on {{ checkout.checkout_date|date:"F dS Y" }}</h3>
+		{% endifchanged %}
+
+		<div class="inner"><a href="{{ checkout.book.get_absolute_url }}">{{checkout.book.name}}</a> {% if checkout.is_overdue %}<h1>Overdue, nigga</h1>{%endif%}
+		</div>
+
+		{% ifchanged checkout.checkout_date %}
+			</div>
+		{% endifchanged %}
+
+	{% endfor %}
+{% endblock content %}

@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 import isbn
+from datetime import datetime,timedelta
 
 class Author(models.Model):
 	first_name = models.CharField('author\'s first name', max_length = 100)
@@ -66,6 +67,7 @@ class Checkout(models.Model):
 	user = models.ForeignKey(User)
 	checkout_date = models.DateTimeField(auto_now_add = True)
 	return_date = models.DateTimeField(null = True, blank=True)
+	extension = models.IntegerField("Extension in days", blank = True, default = 0)
 	class Meta:
 
 		permissions = (
@@ -74,6 +76,10 @@ class Checkout(models.Model):
 
 	def __unicode__(self):
 		return self.user.username + ' ' + self.book.name
+
+	def is_overdue(self):
+		
+		 return not self.return_date and (datetime.now() - self.checkout_date).days > Library.objects.get().max_lend_period + int(self.extension)
 
 class Library(models.Model):
 	name = models.CharField('library name', max_length = 100)
