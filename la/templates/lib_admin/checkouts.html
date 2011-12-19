@@ -13,6 +13,9 @@
 				}}">{{checkout.book.name}}</a> -
 			{% if checkout.is_overdue %}
 				<span class="overdue">Overdue</span>
+			{% else %}
+				<span> Return by
+					{{checkout.checkout_date|add:12}}</span>
 			{% endif %}
 		</div>
 
