@@ -210,7 +210,9 @@ nav li {
 
 }
 
-
+.full #content {
+	width: 100%;
+}
 article {
 
 
@@ -237,7 +239,13 @@ article {
 
 #sidebar {
 
-	float:left;
+	float: left;
+
+}
+
+.full #sidebar {
+	
+	display: none;
 
 }
 

@@ -5,7 +5,7 @@
 		<title>{% block title %}{{library.name}}{% endblock %}</title>
 		<link rel="stylesheet" href="{% block stylesheet %}{{ STATIC_URL }}css/style.css{% endblock %}" />
 	</head>
-	<body>
+	<body class="{% block bodyclass %}{% endblock %}">
 		<div id="header" class="box">
 			{% block branding %}<h1><a href="{{ base_url }}">{{library.name}}</a></h1>{% endblock %}
 			<nav>
