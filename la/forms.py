@@ -10,6 +10,7 @@ class AutoCompleteWidget(TextInput):
 
 	class Media:
 		js = ('js/jquery-ui-1.8.16.custom.min.js',)
+		css = {'all': ('js/css/jquery-ui-1.8.16.custom.css',) }
 
 class CheckoutForm(ModelForm):
 

@@ -9,13 +9,24 @@ jQuery(document).ready(function($) {
 		$("#id_form-TOTAL_FORMS").val(form_no + 1);
 	});
 
-	$('.autocomplete').change(function() {
+	$('.autocomplete').autocomplete({
+		minLength : 2,
+		source : function(request, response) {
 
-		$.get('autocomplete', {
-			book:	$(this).val()
-				}, 
-			function (data, textStatus, req) {
-				console.log(req);
+			var term = request.term;
+			request.book = term;
+			$.getJSON('autocomplete', {
+					book : term 
+					},
+			   	function(data, status, xhr) {
+				response( $.map(data, function(item) {
+					return {
+						label: item.fields.name,
+						value: item.pk,
+					}
+				}));
+			
 			});
+		}
 	});
 });
