@@ -1,5 +1,6 @@
 from django.http import HttpResponse, Http404
 from django.utils import simplejson
+from django.core import serializers
 from django.db.models import Q
 from django.conf import settings
 from django.contrib.auth.forms import AuthenticationForm
@@ -166,4 +167,5 @@ def checkout(request):
 def autocomplete(request):
 	
 	if 'book' in request.GET:
-		return HttpResponse(simplejson.dumps({'book' : request.GET['book']}))
+		b = Book.objects.filter(Q(name__istartswith=request.GET['book'])).order_by('name')
+		return HttpResponse(serializers.serialize('json', b))

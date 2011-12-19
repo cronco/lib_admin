@@ -1,5 +1,10 @@
 {% extends "lib_admin/base_admin.html" %}
 
+{% block extraScripts %}
+	{{ block.super }}
+	{{ form.form.media }}
+{% endblock extraScripts %}
+
 {% block content %}
 <div class="hidden" id="extra-form">
 	{{ extraBooksFormset.empty_form }}
