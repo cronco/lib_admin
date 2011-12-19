@@ -33,6 +33,9 @@ urlpatterns = patterns('la.views',
 		url(r'^admins/?$', 'admin', name='admin'),
 		url(r'^admins/checkout/?$', 'checkout', name='checkout'),
 
+		# API stuff (feels good sayin that)
+		url(r'^admins/autocomplete/?$', 'autocomplete'),
+
 
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),

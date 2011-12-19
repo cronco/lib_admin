@@ -1,4 +1,5 @@
 from django.http import HttpResponse, Http404
+from django.utils import simplejson
 from django.db.models import Q
 from django.conf import settings
 from django.contrib.auth.forms import AuthenticationForm
@@ -162,3 +163,7 @@ def checkout(request):
 	c['extraBooksFormset'] = extraBooksFormset
 	return render_to_response('lib_admin/checkout.html', {}, c)
 
+def autocomplete(request):
+	
+	if 'book' in request.GET:
+		return HttpResponse(simplejson.dumps({'book' : request.GET['book']}))
