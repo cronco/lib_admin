@@ -1,5 +1,15 @@
 {% extends "lib_admin/base_front.html" %}
 
+{% block nav %}
+{% if not request.GET.show or request.GET.show == 'all' %}
+	<li><a href="?show=outstanding">Outstanding</a></li>
+{% else %}
+	<li>
+		<a href="?show=all">All</a>
+	</li>
+{% endif %}
+{% endblock nav %}
+
 {% block content %}
 	{% for checkout in checkouts %}
 
@@ -11,11 +21,15 @@
 		<div class="inner">
 			<a href="{{ checkout.book.get_absolute_url
 				}}">{{checkout.book.name}}</a> -
-			{% if checkout.is_overdue %}
-				<span class="overdue">Overdue</span>
+			{% if checkout.return_date %}
+			<span>Returned on {{ checkout.return_date|date:"F dS Y" }}</span>
 			{% else %}
-				<span> Return by
-					{{checkout.checkout_date|add:12}}</span>
+				{% if checkout.is_overdue %}
+					<span class="overdue">Overdue</span>
+				{% else %}
+					<span> Return by
+						{{ checkout.due_date|date:"F dS Y" }}</span>
+				{% endif %}
 			{% endif %}
 		</div>
 
@@ -23,5 +37,13 @@
 			</div>
 		{% endifchanged %}
 
+	{% empty %}
+	<div class="box">
+		{% if request.GET.show == 'outstanding' %}
+			You have no outstanding checkouts.
+		{% else %}
+			You haven't checked out any books yet.
+		{% endif %}
+	</div>
 	{% endfor %}
 {% endblock content %}

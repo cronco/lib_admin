@@ -81,6 +81,9 @@ class Checkout(models.Model):
 		
 		 return not self.return_date and (datetime.now() - self.checkout_date).days > Library.objects.get().max_lend_period + int(self.extension)
 
+	def due_date(self):
+		return self.checkout_date + timedelta(days = (Library.objects.get().max_lend_period + int(self.extension)))
+
 class Library(models.Model):
 	name = models.CharField('library name', max_length = 100)
 	#maximum number of days a person can lend a book
