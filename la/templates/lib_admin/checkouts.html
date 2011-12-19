@@ -8,7 +8,12 @@
 			<h3>Checked out on {{ checkout.checkout_date|date:"F dS Y" }}</h3>
 		{% endifchanged %}
 
-		<div class="inner"><a href="{{ checkout.book.get_absolute_url }}">{{checkout.book.name}}</a> {% if checkout.is_overdue %}<h1>Overdue, nigga</h1>{%endif%}
+		<div class="inner">
+			<a href="{{ checkout.book.get_absolute_url
+				}}">{{checkout.book.name}}</a> -
+			{% if checkout.is_overdue %}
+				<span class="overdue">Overdue</span>
+			{% endif %}
 		</div>
 
 		{% ifchanged checkout.checkout_date %}

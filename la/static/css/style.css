@@ -60,7 +60,7 @@ a {
 }
 /*
  * color0: #141414
- * color1: #203E42
+ * color1: #203e42
  * color2: #7E9899
  * color3: #D4FFFD
  * color4: #DB9655
@@ -194,7 +194,13 @@ nav li {
 
 	border: 1px solid #DB9655;
 	margin: 0.6em;
+	padding: 0.3em;
 
+}
+
+.overdue {
+
+	color: #680E02;
 }
 
 #content {

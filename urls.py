@@ -6,7 +6,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 admin.autodiscover()
 
-urlpatterns = patterns('lib_admin.views',
+urlpatterns = patterns('lib_admin.la.views',
 	# The main views, for displayin books, authors, 
 	# for the front
      url(r'^$', 'home', name='home'),

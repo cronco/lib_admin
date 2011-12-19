@@ -65,8 +65,8 @@ class Book(models.Model):
 class Checkout(models.Model):
 	book = models.ForeignKey(Book)
 	user = models.ForeignKey(User)
-	checkout_date = models.DateTimeField(auto_now_add = True)
-	return_date = models.DateTimeField(null = True, blank=True)
+	checkout_date = models.DateField(auto_now_add = True)
+	return_date = models.DateField(null = True, blank=True)
 	extension = models.IntegerField("Extension in days", blank = True, default = 0)
 	class Meta:
 
