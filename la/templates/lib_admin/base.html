@@ -32,10 +32,11 @@
 					{% if user.is_staff %}
 						<a href="{% url admin %}">Admin</a>
 					{% endif %}
+				</div>
+
 				{% else %}
 				Please <a href="{% url login %}">login</a> to reserve books.
 				{% endif %}
-				</div>
 			</div>
 			<form action="/search/" id="simple_search" method="GET">
 				<input name="search" type="text" placeholder="Search by ISBN, author or name" value="{{search}}"/>

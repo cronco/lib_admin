@@ -21,11 +21,13 @@
 	</h2>
 	<h3>{{book.publisher}}</h3>
 	<div id="synopsis" class="article">
+		{% if book.synopsis %}
 		<h4>Synopsis</h4>	
-		{{book.synopsis|safe|linebreaks}}
+		{{ book.synopsis|safe|linebreaks }}
+		{% endif %}
 	</div>
 	{% if book.isbn %}
-	<span>ISBN: {{book.isbn}} - <a href="{{book.get_amazon_link}}">Amazon Link</a></span>
+	<span>ISBN: {{ book.isbn }} - <a href="{{ book.get_amazon_link }}">Amazon Link</a></span>
 	{% endif %}
 </article>
 
@@ -36,7 +38,7 @@
 		<a href="{{book.preview}}" class="button_link">Download preview</a>
 	{% else %}
 		{%	if user.is_anonymous %}
-		<p>Please <a href={{ log_in }}>login</a> to download preview.</p>
+		<p>Please <a href={% url  login %}>login</a> to download preview.</p>
 		{% endif %}
 	{% endif %}
 	{% if book.available %}
@@ -48,7 +50,7 @@
 			{% if user.is_authenticated and not perms.la_checkout_book %}
 			<p>You cannot reserve a book until you return your overdue books.</p>
 			{% endif %}
-		<p>Please <a href={{ log_in }}>login</a> to reserve it.</p>
+		<p>Please <a href={% url login %}>login</a> to reserve it.</p>
 		{% endif %}
 	</div>
 	{% endif %}
