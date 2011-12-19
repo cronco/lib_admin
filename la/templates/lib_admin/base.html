@@ -2,8 +2,12 @@
 {% load static %}
 <html>
 	<head>
+		<meta charset="utf-8">
 		<title>{% block title %}{{library.name}}{% endblock %}</title>
 		<link rel="stylesheet" href="{% block stylesheet %}{{ STATIC_URL }}css/style.css{% endblock %}" />
+		{% block extraStyles %}{% endblock extraStyles %}
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" ></script>
+		{% block extraScripts %}{% endblock extraScripts %}
 	</head>
 	<body class="{% block bodyclass %}{% endblock %}">
 		<div id="header" class="box">

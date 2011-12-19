@@ -7,9 +7,11 @@ from django.template import RequestContext, Context, loader
 from django.shortcuts import render_to_response, redirect
 from django.core.paginator import Paginator
 from django.utils.safestring import SafeString
+from django.forms.models import modelformset_factory, formset_factory
 from la.models import *
 from la.helpers import buildGenreTree
 from la import isbn
+from la.forms import CheckoutForm, ExtraBookCheckoutForm
 import datetime
 
 l = Library.objects.get()
@@ -150,4 +152,13 @@ def user_checkouts(request):
 def admin(request):
 	c = RequestContext(request, dictionary)
 	return render_to_response('lib_admin/admin.html', {}, c)
+
+def checkout(request):
+	c = RequestContext(request, dictionary)
+	form = CheckoutForm(request.POST)
+	CheckoutFormSet = formset_factory(CheckoutForm, extra=1)
+	extraBooksFormset = formset_factory(ExtraBookCheckoutForm)
+	c['form'] = CheckoutFormSet
+	c['extraBooksFormset'] = extraBooksFormset
+	return render_to_response('lib_admin/checkout.html', {}, c)
 

@@ -194,7 +194,7 @@ nav li {
 
 	width:20%;
 	margin:5em auto;
-	border:2px solid #DB9655;
+	border:3px solid #DB9655;
 
 }
 
@@ -204,6 +204,11 @@ nav li {
 	border: 1px solid #DB9655;
 	margin: 0.6em;
 	padding: 0.3em;
+
+}
+
+.hidden {
+	display: none;
 
 }
 
@@ -222,6 +227,7 @@ nav li {
 .full #content {
 	width: 100%;
 }
+
 article {
 
 
@@ -275,6 +281,7 @@ article {
 #sidebar {
 
 	float: left;
+	width: 25%;
 
 }
 

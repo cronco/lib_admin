@@ -2,13 +2,15 @@
 
 {%block content %}
 	{% if news %}
+	<div class="box">
 		{% for story in news %}
 		<article>
-			<h2>{{story.title}}</h2>
+		<h2><a href="{{ story.get_absolute_url }}">{{ story.title }}</a></h2>
 			<time datetime="{{story.pub_date|date:"Y-m-d"}}">{{story.pub_date|date:"N jS Y"}}</time>
 			{{story.content|escape|linebreaks}}
 		</article>
 		{% endfor %}
+	</div>
 	{% endif %}
 {%endblock content %}
 

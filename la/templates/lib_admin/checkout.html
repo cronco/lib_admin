@@ -1,0 +1,20 @@
+{% extends "lib_admin/base_admin.html" %}
+
+{% block content %}
+<div class="hidden" id="extra-form">
+	{{ extraBooksFormset.empty_form }}
+</div>
+
+<div class="box">
+	<form action="" method="POST" >
+		{% csrf_token %}
+		<div id="checkout-form">
+			{{ form }}
+		</div>
+		<input type="button" value="Add Book" id="add-book" />
+		<input type="submit" value="Submit" />
+		
+	</form>
+</div>
+
+{% endblock content %}

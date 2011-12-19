@@ -31,6 +31,7 @@ urlpatterns = patterns('la.views',
 		url(r'^my-checkouts/?$', 'user_checkouts', name='user_checkouts'),
 		# Finally, admin stuff
 		url(r'^admins/?$', 'admin', name='admin'),
+		url(r'^admins/checkout/?$', 'checkout', name='checkout'),
 
 
     # Uncomment the admin/doc line below to enable admin documentation:
