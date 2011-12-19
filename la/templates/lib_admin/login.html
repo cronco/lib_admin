@@ -11,8 +11,8 @@
 <p>Your username and password didn't match. Please try again.</p>
 {% endif %}
 
-<div class="box">
-	<form method="post" action="{% url "login" %}">
+<div class="box small">
+	<form method="post" action="{% url "login" %}" class="form login-form">
 	{% csrf_token %}
 	<table>
 	<tr>
@@ -25,7 +25,7 @@
 	</tr>
 	</table>
 
-	<input type="submit" value="login" />
+	<input type="submit" value="Login" />
 	<input type="hidden" name="next" value="{{ next }}" />
 	</form>
 </div>

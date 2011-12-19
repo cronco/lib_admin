@@ -190,6 +190,15 @@ nav li {
 
 }
 
+.small.box {
+
+	width:20%;
+	margin:5em auto;
+	border:2px solid #DB9655;
+
+}
+
+
 .inner {
 
 	border: 1px solid #DB9655;
@@ -230,6 +239,32 @@ article {
 
 	float:left;
 	margin:0 1em 1em 0;
+
+}
+/**
+ *  Forms
+ */
+
+.form {
+
+	text-align: center;
+
+}
+
+.login-form > table {
+
+	margin: auto;
+
+}
+
+.login-form label {
+
+	padding: 0 1.5em;
+
+}
+
+.form input[type="submit"] {
+
 
 }
 
