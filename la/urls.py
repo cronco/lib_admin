@@ -6,16 +6,31 @@ from django.conf.urls.static import static
 # from django.contrib import admin
 # admin.autodiscover()
 
-urlpatterns = patterns('lib_admin.views',
-     url(r'^$', 'home', name='home'),
-	 url(r'^book/(?P<book_id>\d+)$','book', name='book'),
-	 url(r'^catalogue$', 'catalogue'),
-	 url(r'^genre/(?P<genre_id>\d+)$', 'catalogue', name='genre_catalogue'),
-	 url(r'^author/(?P<author_id>\d+)$', 'catalogue', name='author_catalogue'),
-	 url(r'^search$', 'catalogue', name='search'),
-	 url(r'^news$', 'news'),
-	 url(r'^news/(?P<news_id>\d+)$', 'newsItem')
-	 
+urlpatterns = patterns('la.views',
+
+		# The main views, for displayin books, authors, 
+		# for the front
+
+		url(r'^$', 'home', name='home'),
+		url(r'^book/(?P<book_id>\d+)/?$','book', name='book'),
+		url(r'^catalogue/$', 'catalogue'),
+		url(r'^catalogue/(?P<page_no>\d+)/?$', 'catalogue', name='catalogue'),
+		url(r'^genre/(?P<genre_id>\d+)/?$', 'catalogue', name='genre'),
+		url(r'^author/(?P<author_id>\d+)/?$', 'catalogue'),
+		url(r'^author/(?P<author_id>\d+)/(?P<page_no>\d+)/?$', 'catalogue', name='author'),
+		url(r'^authors/?$', 'authors'),
+		url(r'^authors/(?P<page_no>\d+)?$', 'authors', name='authors'),
+		url(r'^search/?$', 'catalogue'),
+		url(r'^search(/(?P<page_no>\d+)?)?$', 'catalogue', name='search'),
+		url(r'^news/(?P<news_id>\d+)/?$', 'news_item'),
+
+		# The user parts follow here
+		url(r'^login/?$', 'login_view', name='login'),
+		url(r'^logout/?$', 'logout_view', name='logout'),
+		url(r'^my-checkouts/?$', 'user_checkouts', name='user_checkouts'),
+		# Finally, admin stuff
+		url(r'^admins/?$', 'admin', name='admin'),
+
     # url(r'^lib_admin/', include('lib_admin.foo.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:
@@ -23,4 +38,4 @@ urlpatterns = patterns('lib_admin.views',
 
     # Uncomment the next line to enable the admin:
   #   url(r'^admin/', include(admin.site.urls)),
-) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) 
+)
