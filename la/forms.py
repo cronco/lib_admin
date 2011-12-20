@@ -1,12 +1,22 @@
-from django.forms import ModelForm, TextInput
+from django.forms import ModelForm, TextInput, MultiWidget, HiddenInput
 from la.models import *
 
-class AutoCompleteWidget(TextInput):
+class AutoCompleteWidget(MultiWidget):
 
 
 	def __init__(self, *args, **kwargs):
-		super(AutoCompleteWidget, self).__init__(*args, **kwargs)
-		self.attrs = {'class' : "autocomplete"}
+		widgets = (
+				TextInput(attrs = {'class' : "autocomplete"}),
+				HiddenInput()
+				)
+		super(AutoCompleteWidget, self).__init__(widgets, *args, **kwargs)
+
+	def decompress(self, value):
+		if value:
+			return [data[0], data[1]]
+		return [None, None]
+
+		
 
 	class Media:
 		js = ('js/jquery-ui-1.8.16.custom.min.js',)

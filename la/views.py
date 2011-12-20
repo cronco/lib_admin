@@ -167,5 +167,8 @@ def checkout(request):
 def autocomplete(request):
 	
 	if 'book' in request.GET:
-		b = Book.objects.filter(Q(name__istartswith=request.GET['book'])).order_by('name')
+		b = Book.objects.filter(
+					Q(name__istartswith=request.GET['book']) |
+					Q(isbn__startswith = request.GET['book'])
+					).order_by('name')
 		return HttpResponse(serializers.serialize('json', b))

@@ -10,23 +10,30 @@ jQuery(document).ready(function($) {
 	});
 
 	$('.autocomplete').autocomplete({
-		minLength : 2,
-		source : function(request, response) {
 
-			var term = request.term;
-			request.book = term;
-			$.getJSON('autocomplete', {
-					book : term 
+			minLength : 2,
+			source : function(request, response) {
+
+						var term = request.term;
+						request.book = term;
+						$.getJSON('autocomplete', {
+							book : term 
+						},
+						function(data, status, xhr) {
+							response( $.map(data, function(item) {
+								return {
+									label: item.fields.name + ' - ' + item.fields.isbn,
+									value: item.fields.name,
+									id: item.pk
+								}
+								}));
+
+						});
 					},
-			   	function(data, status, xhr) {
-				response( $.map(data, function(item) {
-					return {
-						label: item.fields.name,
-						value: item.pk,
-					}
-				}));
-			
-			});
-		}
+			select : function(event, ui) {
+
+						 console.log(ui, $(this).next());
+						 $(this).next().val(ui.item.id);
+					 }
 	});
 });
