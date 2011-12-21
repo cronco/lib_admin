@@ -1,6 +1,15 @@
 {% extends "lib_admin/base.html" %}
 {% load static %}
 
+{% block nav %}
+	<li>
+	<a href="{% url checkout %}">Checkout</a>
+	</li>
+	<li>
+	<a href="{% url checkin %}">Checkin</a>
+	</li>
+{% endblock nav %}
+
 {% block extraScripts %}
 <script type="text/javascript"i src="{{ STATIC_URL }}js/behave.js"></script>
 {% endblock extraScripts %}

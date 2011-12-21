@@ -1,4 +1,4 @@
-from django.forms import ModelForm, TextInput, MultiWidget, HiddenInput
+from django.forms import Form, ModelForm, TextInput, MultiWidget, HiddenInput, CheckboxInput, ModelChoiceField
 from la.models import *
 
 class AutoCompleteWidget(MultiWidget):
@@ -47,5 +47,26 @@ class ExtraBookCheckoutForm(CheckoutForm):
 		super(ExtraBookCheckoutForm, self).__init__(*args, **kwargs)
 		self.fields['user'].widget = HiddenInput(attrs ={'class': 'extrauserfield'})
 
+
+class CheckinForm(ModelForm):
+
+	class Meta:
+		model = Checkout
+		fields = ('return_date',)
+
+
+	def __init__(self, *args, **kwargs):
+		super(CheckinForm, self).__init__(*args, **kwargs)
+		self.fields['return_date'].widget = CheckboxInput()
+		#self.fields['user'].widget = HiddenInput(attrs ={'class': 'extrauserfield'})
+
+class AutoUserForm(Form):
+
+	user = ModelChoiceField(
+			queryset = User.objects.all(),
+			widget = AutoCompleteWidget(attrs={
+					"data-search" : "user",
+					"data-role" : "checkin-user"
+					}))
 
 

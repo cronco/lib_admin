@@ -13,7 +13,7 @@ from django.forms.models import modelformset_factory, formset_factory
 from la.models import *
 from la.helpers import buildGenreTree
 from la import isbn
-from la.forms import CheckoutForm, ExtraBookCheckoutForm
+from la.forms import *
 import datetime
 
 l = Library.objects.get()
@@ -171,6 +171,14 @@ def checkout(request):
 	c['extraBooksFormset'] = extraBooksFormset
 	return render_to_response('lib_admin/checkout.html', {}, c)
 
+def checkin(request):
+	c = RequestContext(request, dictionary)
+	user_form = AutoUserForm()
+	CheckinFormSet = modelformset_factory(Checkout, CheckinForm)
+	c['user_form'] = user_form
+	c['form'] = CheckinFormSet
+	return render_to_response('lib_admin/checkin.html', {}, c)
+
 def autocomplete(request):
 	
 	if 'book' in request.GET:
@@ -197,4 +205,13 @@ def autocomplete(request):
 					Q(email__istartswith=request.GET['user']) 
 				).order_by('last_name')
 		return HttpResponse(serializers.serialize('json', u))
+
+	if 'checkouts' in request.GET:
+		x = modelformset_factory(Checkout, CheckinForm,
+			)
+		forms = x(queryset = Checkout.objects.filter(
+						Q(return_date__isnull = True),
+						Q(user = request.GET['user_id'])
+				))
+		return HttpResponse(forms)
 

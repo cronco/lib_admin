@@ -32,6 +32,7 @@ urlpatterns = patterns('la.views',
 		# Finally, admin stuff
 		url(r'^admins/?$', 'admin', name='admin'),
 		url(r'^admins/checkout/?$', 'checkout', name='checkout'),
+		url(r'^admins/checkin/?$', 'checkin', name='checkin'),
 
 		# API stuff (feels good sayin that)
 		url(r'^admins/autocomplete/?$', 'autocomplete'),

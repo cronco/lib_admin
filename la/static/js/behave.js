@@ -12,11 +12,9 @@ jQuery(document).ready(function($) {
 	var options = {
 
 			minLength : 2,
-			select : function(event, ui) {
-
-						 $(this).next().val(ui.item.id);
-					 }
 	};
+	
+
 	$('.autocomplete').live('keydown.autocomplete', function() {
 	
 		var that = this;
@@ -49,12 +47,32 @@ jQuery(document).ready(function($) {
 
 		};
 
+
 		$(this).autocomplete(options)
 		$(this).autocomplete("option", 'source', autocomplete_source);
+		$(this).autocomplete("option", "select", function(event, ui) {
+
+								 $(this).next().val(ui.item.id);
+								 });
+
 	});
 
 	$('.extrauserfield').load(function() {
 		$(this).val($("#id_form-0-user").val());
+	});
+
+	$("#checkin-user .autocomplete").live("keydown.autocomplete", function() {
+		
+		$(this).autocomplete("option", 'select', function(event, ui) {
+
+			 $(this).next().val(ui.item.id);
+			 $.get('autocomplete',{
+					  user_id : ui.item.id,
+					 checkouts: 1
+				 }, function(data, status, req) {
+					$("#checkin-forms").append(data);
+				 });
+		});
 	});
 
 	$("#id_form-0-user").change( function() {
