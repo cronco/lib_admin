@@ -174,19 +174,27 @@ def checkout(request):
 def autocomplete(request):
 	
 	if 'book' in request.GET:
-		count = Book.objects.filter(
-					Q(name__istartswith=request.GET['book']) |
-					Q(isbn__startswith = request.GET['book']) &
-					Q(checkout__return_date=None)
-					).values('checkout').count()
+		count = Checkout.objects.filter(
+				Q(book__name__istartswith = request.GET['book']) |
+				Q(book__isbn__startswith = request.GET['book']),
+				Q(return_date__isnull = True)
+					).count()
 		b = Book.objects.filter(
-					Q(name__istartswith=request.GET['book']) |
-					Q(isbn__startswith = request.GET['book']) 
-					).exclude(copies__lt=count
+						Q(name__istartswith=request.GET['book']) |
+						Q(isbn__startswith = request.GET['book']) 
+					).exclude(copies__lte = count
 					).order_by('name')
 		if 'user_id' in request.GET:
 			b = b.exclude(
-					Q(checkout__user = request.GET['user_id']) &
-					Q(checkout__return_date=None)
-					)
+					Q(checkout__user = request.GET['user_id']),
+					Q(checkout__return_date__isnull=True)
+					).distinct()
 		return HttpResponse(serializers.serialize('json', b))
+	if 'user' in request.GET:
+		u = User.objects.filter(
+					Q(last_name__istartswith=request.GET['user']) |
+					Q(first_name__istartswith=request.GET['user']) |
+					Q(email__istartswith=request.GET['user']) 
+				).order_by('last_name')
+		return HttpResponse(serializers.serialize('json', u))
+

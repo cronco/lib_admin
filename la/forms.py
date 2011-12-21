@@ -3,10 +3,11 @@ from la.models import *
 
 class AutoCompleteWidget(MultiWidget):
 
-	def __init__(self,attrs=None, *args, **kwargs):
+	def __init__(self,attrs = {}, *args, **kwargs):
+		attrs.update({'class' : "autocomplete"})
 		widgets = (
-				TextInput(attrs = {'class' : "autocomplete"}),
-				HiddenInput(attrs = {'class' : "hidden"})
+				TextInput(attrs = attrs),
+				HiddenInput(attrs = attrs)
 				)
 		super(AutoCompleteWidget, self).__init__(widgets, *args, **kwargs)
 
@@ -33,7 +34,8 @@ class CheckoutForm(ModelForm):
 
 	def __init__(self, *args, **kwargs):
 		super(CheckoutForm, self).__init__(*args, **kwargs)
-		self.fields['book'].widget = AutoCompleteWidget()
+		self.fields['book'].widget = AutoCompleteWidget(attrs = {'data-search' : "book"})
+		self.fields['user'].widget = AutoCompleteWidget(attrs = {'data-search' : "user"})
 
 class ExtraBookCheckoutForm(CheckoutForm):
 

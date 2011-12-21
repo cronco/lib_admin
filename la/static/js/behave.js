@@ -12,33 +12,45 @@ jQuery(document).ready(function($) {
 	var options = {
 
 			minLength : 2,
-			source : function(request, response) {
-
-						var term = request.term;
-						request.book = term;
-						$.getJSON('autocomplete', {
-							book : term,
-						   user_id : $("#id_form-0-user").val()	
-						},
-						function(data, status, xhr) {
-							response( $.map(data, function(item) {
-								return {
-									label: item.fields.name + ' - ' + item.fields.isbn,
-									value: item.fields.name,
-									id: item.pk
-								}
-								}));
-
-						});
-					},
 			select : function(event, ui) {
 
-						 console.log(ui, $(this).next());
 						 $(this).next().val(ui.item.id);
 					 }
 	};
 	$('.autocomplete').live('keydown.autocomplete', function() {
-		$(this).autocomplete(options);
+	
+		var that = this;
+		var autocomplete_source = function(request, response) {
+			var term = request.term,
+				term_name = $(that).data('search');
+				search_object = {};
+				if(term_name == 'book')
+					search_object['user_id'] = $("#id_form-0-user_1").val();
+				search_object[term_name] = term;
+				$.getJSON('autocomplete', search_object,
+					function(data, status, xhr) {
+						response( $.map(data, function(item) {
+							if (term_name == 'book') {
+								return {
+									label: item.fields.name + ' - ' + item.fields.isbn,
+									value: item.fields.name,
+									id: item.pk
+									}
+							} else if(term_name == 'user') {
+							
+								return {
+									label : item.fields.last_name + ' ' + item.fields.first_name + ' - ' + item.fields.email,
+									value: item.fields.last_name + ' ' + item.fields.first_name,
+									id: item.pk
+								}
+							}
+							}));
+				});
+
+		};
+
+		$(this).autocomplete(options)
+		$(this).autocomplete("option", 'source', autocomplete_source);
 	});
 
 	$('.extrauserfield').load(function() {
