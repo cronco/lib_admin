@@ -3,7 +3,7 @@ from la.models import *
 
 class AutoCompleteWidget(MultiWidget):
 
-	def __init__(self, *args, **kwargs):
+	def __init__(self,attrs=None, *args, **kwargs):
 		widgets = (
 				TextInput(attrs = {'class' : "autocomplete"}),
 				HiddenInput(attrs = {'class' : "hidden"})

@@ -174,8 +174,19 @@ def checkout(request):
 def autocomplete(request):
 	
 	if 'book' in request.GET:
+		count = Book.objects.filter(
+					Q(name__istartswith=request.GET['book']) |
+					Q(isbn__startswith = request.GET['book']) &
+					Q(checkout__return_date=None)
+					).values('checkout').count()
 		b = Book.objects.filter(
 					Q(name__istartswith=request.GET['book']) |
-					Q(isbn__startswith = request.GET['book'])
+					Q(isbn__startswith = request.GET['book']) 
+					).exclude(copies__lt=count
 					).order_by('name')
+		if 'user_id' in request.GET:
+			b = b.exclude(
+					Q(checkout__user = request.GET['user_id']) &
+					Q(checkout__return_date=None)
+					)
 		return HttpResponse(serializers.serialize('json', b))

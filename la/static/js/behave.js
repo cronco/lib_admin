@@ -17,7 +17,8 @@ jQuery(document).ready(function($) {
 						var term = request.term;
 						request.book = term;
 						$.getJSON('autocomplete', {
-							book : term 
+							book : term,
+						   user_id : $("#id_form-0-user").val()	
 						},
 						function(data, status, xhr) {
 							response( $.map(data, function(item) {
