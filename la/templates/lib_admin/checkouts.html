@@ -1,4 +1,5 @@
 {% extends "lib_admin/base_front.html" %}
+{% load lib_extras %}
 
 {% block nav %}
 {% if not request.GET.show or request.GET.show == 'all' %}
@@ -11,7 +12,7 @@
 {% endblock nav %}
 
 {% block content %}
-	{% for checkout in checkouts %}
+	{% for prev, checkout, next_checkout in checkouts|neighborhood %}
 
 		{% ifchanged checkout.checkout_date %}
 		<div class="box">
@@ -33,9 +34,9 @@
 			{% endif %}
 		</div>
 
-		{% ifchanged checkout.checkout_date %}
-			</div>
-		{% endifchanged %}
+			{% ifnotequal checkout.checkout_date next_checkout.checkout_date %}
+				</div>
+			{% endifnotequal %}
 
 	{% empty %}
 	<div class="box">

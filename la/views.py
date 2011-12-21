@@ -157,8 +157,15 @@ def admin(request):
 
 def checkout(request):
 	c = RequestContext(request, dictionary)
-	form = CheckoutForm(request.POST)
-	CheckoutFormSet = formset_factory(CheckoutForm, extra=1)
+	CheckoutFormSet = formset_factory(CheckoutForm)
+	if request.method == "POST":
+		formset = CheckoutFormSet(data = request.POST)
+		if formset.is_valid():
+			for form in formset:
+				form.save()
+		c['valid'] = formset.is_valid()
+	else:
+		formset = CheckoutFormSet()
 	extraBooksFormset = formset_factory(ExtraBookCheckoutForm)
 	c['form'] = CheckoutFormSet
 	c['extraBooksFormset'] = extraBooksFormset

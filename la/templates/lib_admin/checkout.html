@@ -11,6 +11,10 @@
 </div>
 
 <div class="box">
+	{{valid}}
+	{% for error in errors %}
+		{{ error }}
+	{% endfor %}
 	<form action="" method="POST" >
 		{% csrf_token %}
 		<div id="checkout-form">

@@ -9,7 +9,7 @@ jQuery(document).ready(function($) {
 		$("#id_form-TOTAL_FORMS").val(form_no + 1);
 	});
 
-	$('.autocomplete').autocomplete({
+	var options = {
 
 			minLength : 2,
 			source : function(request, response) {
@@ -35,5 +35,16 @@ jQuery(document).ready(function($) {
 						 console.log(ui, $(this).next());
 						 $(this).next().val(ui.item.id);
 					 }
+	};
+	$('.autocomplete').live('keydown.autocomplete', function() {
+		$(this).autocomplete(options);
+	});
+
+	$('.extrauserfield').load(function() {
+		$(this).val($("#id_form-0-user").val());
+	});
+
+	$("#id_form-0-user").change( function() {
+		$('.extrauserfield').val($(this).val());
 	});
 });

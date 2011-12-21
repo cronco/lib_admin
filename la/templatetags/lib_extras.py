@@ -11,3 +11,13 @@ def paginate(pages, page, request, context = ""):
 			'page' : page,
 			}
 	
+@register.filter
+def neighborhood(iterable):
+	iterator = iter(iterable)
+	prev = None
+	item = iterator.next()  # throws StopIteration if empty.
+	for next in iterator:
+		yield (prev,item,next)
+		prev = item
+		item = next
+	yield (prev,item,None)   
