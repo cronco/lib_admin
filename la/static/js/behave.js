@@ -1,7 +1,7 @@
 
 jQuery(document).ready(function($) {
 
-	$("#add-book").click(function() {
+	$('#add-book').click(function() {
 		var form_no = Number($("#id_form-TOTAL_FORMS").val());
 		$("#checkout-form").append(
 				$("#extra-form").html().replace(/__prefix__/g, form_no)
@@ -12,7 +12,10 @@ jQuery(document).ready(function($) {
 	var options = {
 
 			minLength : 2,
-	};
+			select : function(event, ui) {
+							 $(this).next().val(ui.item.id);
+					 }
+		};
 	
 
 	$('.autocomplete').live('keydown.autocomplete', function() {
@@ -48,31 +51,26 @@ jQuery(document).ready(function($) {
 		};
 
 
-		$(this).autocomplete(options)
+		$(this).autocomplete(options);
 		$(this).autocomplete("option", 'source', autocomplete_source);
-		$(this).autocomplete("option", "select", function(event, ui) {
+		if($(this).hasClass('checkin-user')) {
 
-								 $(this).next().val(ui.item.id);
-								 });
+			$(this).autocomplete("option",  'select', function(event, ui) {
 
+				$(this).next().val(ui.item.id);
+				$.get('autocomplete',{
+					  user_id : ui.item.id,
+					 checkouts: 1
+				 }, function(data, status, req) {
+						$("#checkin-forms").append(data);
+				 });
+			});
+		}
+	
 	});
 
 	$('.extrauserfield').load(function() {
 		$(this).val($("#id_form-0-user").val());
-	});
-
-	$("#checkin-user .autocomplete").live("keydown.autocomplete", function() {
-		
-		$(this).autocomplete("option", 'select', function(event, ui) {
-
-			 $(this).next().val(ui.item.id);
-			 $.get('autocomplete',{
-					  user_id : ui.item.id,
-					 checkouts: 1
-				 }, function(data, status, req) {
-					$("#checkin-forms").append(data);
-				 });
-		});
 	});
 
 	$("#id_form-0-user").change( function() {

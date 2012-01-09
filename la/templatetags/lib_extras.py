@@ -21,3 +21,4 @@ def neighborhood(iterable):
 		prev = item
 		item = next
 	yield (prev,item,None)   
+

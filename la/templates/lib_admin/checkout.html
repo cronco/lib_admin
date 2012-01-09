@@ -15,7 +15,7 @@
 	{% for error in errors %}
 		{{ error }}
 	{% endfor %}
-	<form action="" method="POST" >
+	<form action="" method="POST" class="checkout">
 		{% csrf_token %}
 		<div id="checkout-form">
 			{{ form }}

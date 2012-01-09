@@ -3,8 +3,11 @@ from la.models import *
 
 class AutoCompleteWidget(MultiWidget):
 
-	def __init__(self,attrs = {}, *args, **kwargs):
-		attrs.update({'class' : "autocomplete"})
+	def __init__(self, attrs = {}, *args, **kwargs):
+		if 'class' in attrs:
+			attrs['class'] = attrs['class'] + ' autocomplete'
+		else:
+			attrs['class'] = 'autocomplete'
 		widgets = (
 				TextInput(attrs = attrs),
 				HiddenInput(attrs = attrs)
@@ -25,7 +28,6 @@ class AutoCompleteWidget(MultiWidget):
 		css = {'all': ('js/css/jquery-ui-1.8.16.custom.css',) }
 
 class CheckoutForm(ModelForm):
-
 
 	class Meta:
 		model = Checkout
@@ -66,7 +68,8 @@ class AutoUserForm(Form):
 			queryset = User.objects.all(),
 			widget = AutoCompleteWidget(attrs={
 					"data-search" : "user",
-					"data-role" : "checkin-user"
+					"data-role" : "checkin-user",
+					"class" : "checkin-user",
 					}))
 
 

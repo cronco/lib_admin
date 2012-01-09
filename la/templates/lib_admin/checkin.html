@@ -1,0 +1,21 @@
+{% extends "lib_admin/base_admin.html" %}
+
+{% block extraScripts %}
+	{{ block.super }}
+	{{ user_form.media }}
+{% endblock extraScripts %}
+
+{% block content %}
+<div class="box">
+	<div id="checkin-user">
+			{{user_form}}
+			
+	</div>
+</div>
+	<div id="checkin-forms">
+		<form action="">
+			<input type="submit" value="Checkin" />
+		</form>
+	</div>
+{% endblock content %}
+

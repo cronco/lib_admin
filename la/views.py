@@ -143,9 +143,9 @@ def logout_view(request):
 	logout(request)
 	return redirect('home')
 
-def user_checkouts(request):
+def user_checkouts(request, user = None):
 	c = RequestContext(request, dictionary)
-	checkouts = Checkout.objects.filter(Q(user = request.user.id)).order_by('checkout_date')
+	checkouts = Checkout.objects.filter(Q(user = user or request.user.id)).order_by('checkout_date')
 	if 'show' in request.GET and request.GET['show'] == 'outstanding':
 		checkouts = checkouts.filter(Q(return_date = None))
 	c['checkouts'] = checkouts
@@ -191,27 +191,34 @@ def autocomplete(request):
 						Q(name__istartswith=request.GET['book']) |
 						Q(isbn__startswith = request.GET['book']) 
 					).exclude(copies__lte = count
-					).order_by('name')
+					).order_by('name').distinct()
 		if 'user_id' in request.GET:
 			b = b.exclude(
 					Q(checkout__user = request.GET['user_id']),
 					Q(checkout__return_date__isnull=True)
-					).distinct()
+					)
 		return HttpResponse(serializers.serialize('json', b))
+
 	if 'user' in request.GET:
+
 		u = User.objects.filter(
 					Q(last_name__istartswith=request.GET['user']) |
 					Q(first_name__istartswith=request.GET['user']) |
 					Q(email__istartswith=request.GET['user']) 
-				).order_by('last_name')
+				).filter(
+					Q(user_permissions__codename = 'checkout_book')
+					).order_by('last_name')
 		return HttpResponse(serializers.serialize('json', u))
 
 	if 'checkouts' in request.GET:
 		x = modelformset_factory(Checkout, CheckinForm,
 			)
-		forms = x(queryset = Checkout.objects.filter(
+		query = Checkout.objects.filter(
 						Q(return_date__isnull = True),
 						Q(user = request.GET['user_id'])
-				))
-		return HttpResponse(forms)
+				)
+		c = RequestContext(request, dictionary)
+		forms = x(queryset = query)
+		c.update({'checkouts' : zip(query, forms) })
+		return render_to_response('forms/checkin.html', {}, c)
 
