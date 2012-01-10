@@ -169,14 +169,34 @@ def checkout(request):
 	extraBooksFormset = formset_factory(ExtraBookCheckoutForm)
 	c['form'] = CheckoutFormSet
 	c['extraBooksFormset'] = extraBooksFormset
+	c['context'] = 'checkout'
 	return render_to_response('lib_admin/checkout.html', {}, c)
 
 def checkin(request):
 	c = RequestContext(request, dictionary)
-	user_form = AutoUserForm()
 	CheckinFormSet = modelformset_factory(Checkout, CheckinForm)
+	if request.method == "POST":
+		data = request.POST.copy()
+		for i in range(0, int(data['form-TOTAL_FORMS'])):
+			if 'form-' + str(i) + '-return_date' in data:
+				data['form-' + str(i) + '-return_date'] = datetime.date.today().isoformat()
+			else:
+				data['form-' + str(i) + '-return_date'] = ''
+
+		formset = CheckinFormSet(data = data)
+		user_form = AutoUserForm(data = data)
+		if formset.is_valid():
+			c['cool'] = 'cool'
+			formset.save()
+		else:
+			c['err'] = formset.errors
+			c['data'] = data
+	else:
+		CheckinFormSet = modelformset_factory(Checkout, CheckinForm)
+		user_form = AutoUserForm()
 	c['user_form'] = user_form
 	c['form'] = CheckinFormSet
+	c['context'] = 'checkin'
 	return render_to_response('lib_admin/checkin.html', {}, c)
 
 def autocomplete(request):
@@ -192,33 +212,38 @@ def autocomplete(request):
 						Q(isbn__startswith = request.GET['book']) 
 					).exclude(copies__lte = count
 					).order_by('name').distinct()
-		if 'user_id' in request.GET:
+		#Exclude books which are already lent to the user.
+		if 'user_id' and 'checkout-book' in request.GET:
 			b = b.exclude(
 					Q(checkout__user = request.GET['user_id']),
 					Q(checkout__return_date__isnull=True)
 					)
 		return HttpResponse(serializers.serialize('json', b))
 
+	#if we're autocompleteing for users
 	if 'user' in request.GET:
 
 		u = User.objects.filter(
 					Q(last_name__istartswith=request.GET['user']) |
 					Q(first_name__istartswith=request.GET['user']) |
 					Q(email__istartswith=request.GET['user']) 
-				).filter(
-					Q(user_permissions__codename = 'checkout_book')
-					).order_by('last_name')
+				).order_by('last_name')
+
+		# If we're searching for users who are able to checkout books,
+		# exclude those who don't have the necessary permission
+		if 'checkout-user' in request.GET:
+			u = u.filter( Q(user_permissions__codename = 'checkout_book'))
 		return HttpResponse(serializers.serialize('json', u))
 
 	if 'checkouts' in request.GET:
-		x = modelformset_factory(Checkout, CheckinForm,
-			)
+		x = modelformset_factory(Checkout, CheckinForm)
 		query = Checkout.objects.filter(
 						Q(return_date__isnull = True),
 						Q(user = request.GET['user_id'])
-				)
+				).order_by('checkout_date')
 		c = RequestContext(request, dictionary)
 		forms = x(queryset = query)
-		c.update({'checkouts' : zip(query, forms) })
+		c.update({'checkouts' : zip(query, forms), 'formset':
+			forms.management_form})
 		return render_to_response('forms/checkin.html', {}, c)
 

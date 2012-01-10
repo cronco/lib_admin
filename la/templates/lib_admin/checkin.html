@@ -6,15 +6,22 @@
 {% endblock extraScripts %}
 
 {% block content %}
+{{err}}
+{{data}}
 <div class="box">
+	We cool, dawg? {% if cool %} You know it, dawg {% endif %}
 	<div id="checkin-user">
 			{{user_form}}
-			
+		
+		<input class="button_link small" id="check-all" type="button" value="Check all" name="check-all" />
 	</div>
+	
 </div>
 	<div id="checkin-forms">
-		<form action="">
-			<input type="submit" value="Checkin" />
+		<form action="" method="POST" id="checkin-form"> 
+			{% csrf_token %}
+			<div id="added-forms"></div>
+			<input type="submit" value="Checkin" name="checkin" class=" small button_link" />
 		</form>
 	</div>
 {% endblock content %}

@@ -79,19 +79,29 @@ a {
 	color: #DB9655;
 }
 
-a.button_link {
+.button_link {
 
 	background: #DE6A00;
 	color: #D4FFFD;
-	padding: 0.9em;
+	padding: 0.8em;
 	border-radius: 5px;
+	border: none;
 	font-size: 1.3em;
-	display: block;
+	display: inline-block;
 	margin-bottom: 0.5em;
 	line-height: 1.3em;
 	text-align: center;
 
 
+}
+
+.small.button_link {
+
+	padding: 0.1em;
+	font-size: 1.1em;
+	margin-bottom: 0.1em;
+	line-height: 1.1em;
+	
 }
 
 .button_link:visited {
@@ -184,8 +194,8 @@ nav li {
 
 	background:#203E42;
 	border-radius:5px;
-	margin:2em;
-	padding:1em;
+	margin:1.5em;
+	padding:0.6em;
 	border-bottom:1px solid #7E9899;
 
 }
@@ -201,7 +211,6 @@ nav li {
 
 .inner {
 
-	border: 1px solid #DB9655;
 	margin: 0.6em;
 	padding: 0.3em;
 
@@ -221,6 +230,12 @@ nav li {
 
 	width:70%;
 	float:left;
+
+}
+
+.return-box, #check-all {
+	
+	float: right;
 
 }
 

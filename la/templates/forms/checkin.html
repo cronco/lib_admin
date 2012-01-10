@@ -1,12 +1,11 @@
 {% load lib_extras %}
 
+	{{ formset}}
 	<div class="box">
 	{% for prev_tuple, tuple, next_tuple in checkouts|neighborhood %}
 		{% with checkout=tuple.0 form=tuple.1 %}
-		{{form }}
 			{% ifnotequal prev_tuple.0.checkout_date checkout.checkout_date %}
-				<h3>Checked out on {{ checkout.checkout_date|date:"F dS Y" }}</h3>
-				
+			<h3>Checked out on {{ checkout.checkout_date|date:"F dS Y" }}</h3>
 			{% endifnotequal %}
 
 		<div class="inner">
@@ -21,9 +20,12 @@
 						{{ checkout.due_date|date:"F dS Y" }}</span>
 				{% endif %}
 			{% endif %}
+			<span class="return-box">
+				{{ form.return_date }}
+			<input name="form-{{ forloop.counter0 }}-id" value="{{ checkout.id }}" type="hidden" /> 
+			</span>
 		</div>
 
-			{{ next_tuple.0}}
 			{% ifnotequal checkout.checkout_date next_tuple.0.checkout_date %}
 				</div>
 				{% if not forloop.last %}

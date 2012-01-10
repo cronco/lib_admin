@@ -36,14 +36,18 @@ class CheckoutForm(ModelForm):
 
 	def __init__(self, *args, **kwargs):
 		super(CheckoutForm, self).__init__(*args, **kwargs)
-		self.fields['book'].widget = AutoCompleteWidget(attrs = {'data-search' : "book"})
-		self.fields['user'].widget = AutoCompleteWidget(attrs = {'data-search' : "user"})
+		self.fields['book'].widget = AutoCompleteWidget(attrs = {'data-search' :
+			"book", 
+			'data-role' : 'checkout-book'})
+		self.fields['user'].widget = AutoCompleteWidget(attrs = 
+								{'data-search' : "user",
+								'data-role' : "checkout-user"})
 
 class ExtraBookCheckoutForm(CheckoutForm):
 
 	class Meta:
 		model = Checkout
-		exclude = ('extension','return_date' )
+		exclude = ('extension', 'return_date')
 
 	def __init__(self, *args, **kwargs):
 		super(ExtraBookCheckoutForm, self).__init__(*args, **kwargs)
@@ -54,7 +58,7 @@ class CheckinForm(ModelForm):
 
 	class Meta:
 		model = Checkout
-		fields = ('return_date',)
+		fields = ('return_date', )
 
 
 	def __init__(self, *args, **kwargs):
