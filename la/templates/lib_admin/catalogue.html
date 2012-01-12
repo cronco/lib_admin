@@ -50,7 +50,12 @@
 	<article class="box">
 		<h2>
 			<a href="{{book.get_absolute_url}}">{{book.name}}</a>
-		</h2>
+			{% if user.is_staff %}
+			- 
+			<a href="{% url edit_book book.id %}">Edit book</a>
+			{% endif %}
+		</h2> 
+	
 		{{book.synopsis|truncatewords:3}}
 	</article>
 	{% endfor %}

@@ -20,6 +20,9 @@
 		{% endif %}
 	</h2>
 	<h3>{{book.publisher}}</h3>
+		{% if user.is_staff %}
+			<a href="{% url edit_book book.id %}">Edit book</a>
+		{% endif %}
 	<div id="synopsis" class="article">
 		{% if book.synopsis %}
 		<h4>Synopsis</h4>	

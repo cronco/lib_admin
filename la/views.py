@@ -211,6 +211,20 @@ def add_book(request):
 
 	return render_to_response('forms/general.html', {}, c)
 
+def edit_book(request, book_id = 0):
+	c = RequestContext(request, dictionary)
+	if book_id:
+		b = Book.objects.get(pk = book_id)
+		if request.method == "POST":
+			form  = BookForm(data = request.POST, instance = b)
+			if form.is_valid():
+				form.save()
+		else:
+			form = BookForm(instance = b)
+		c['form'] = form
+
+	return render_to_response('forms/general.html', {}, c)
+
 def autocomplete(request):
 	
 	if 'book' in request.GET:
