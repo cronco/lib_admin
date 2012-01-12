@@ -21,8 +21,11 @@
 				{% endif %}
 			{% endif %}
 			<span class="return-box">
+				{{ form.extension.label_tag }}
+				{{ form.extension }}
 				{{ form.return_date }}
 			<input name="form-{{ forloop.counter0 }}-id" value="{{ checkout.id }}" type="hidden" /> 
+			<input name="form-{{ forloop.counter0 }}-book_id" value="{{ checkout.book.id }}" type="hidden" /> 
 			</span>
 		</div>
 

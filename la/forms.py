@@ -58,7 +58,8 @@ class CheckinForm(ModelForm):
 
 	class Meta:
 		model = Checkout
-		fields = ('return_date', )
+		fields = ('return_date','extension', )
+		exclude = ('book')
 
 
 	def __init__(self, *args, **kwargs):
