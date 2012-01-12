@@ -21,11 +21,10 @@
 				{% endif %}
 			{% endif %}
 			<span class="return-box">
-				{{ form.extension.label_tag }}
+				<label class="autohide-label" for="id_{{ form.extension.html_name }}">{{ form.extension.label }}</label>
 				{{ form.extension }}
 				{{ form.return_date }}
 			<input name="form-{{ forloop.counter0 }}-id" value="{{ checkout.id }}" type="hidden" /> 
-			<input name="form-{{ forloop.counter0 }}-book_id" value="{{ checkout.book.id }}" type="hidden" /> 
 			</span>
 		</div>
 

@@ -59,13 +59,12 @@ class CheckinForm(ModelForm):
 	class Meta:
 		model = Checkout
 		fields = ('return_date','extension', )
-		exclude = ('book')
 
 
 	def __init__(self, *args, **kwargs):
 		super(CheckinForm, self).__init__(*args, **kwargs)
 		self.fields['return_date'].widget = CheckboxInput()
-		#self.fields['user'].widget = HiddenInput(attrs ={'class': 'extrauserfield'})
+		self.fields['extension'].widget.attrs = {'class' : 'autohidden'}
 
 class AutoUserForm(Form):
 

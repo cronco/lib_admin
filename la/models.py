@@ -67,8 +67,7 @@ class Checkout(models.Model):
 	user = models.ForeignKey(User)
 	checkout_date = models.DateField(auto_now_add = True)
 	return_date = models.DateField(null = True, blank=True)
-	extension = models.IntegerField("Extension", default = 0, help_text = "in
-	days")
+	extension = models.IntegerField("Extension", default = 0, help_text = "in days")
 	class Meta:
 
 		permissions = (

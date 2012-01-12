@@ -69,21 +69,27 @@ jQuery(document).ready(function($) {
 					 checkouts: 1
 				 }, function(data, status, req) {
 						$("#added-forms").html(data);
+						$("#added-forms .autohidden").addClass("hidden");
 				 });
 			});
 		}
 	
 	});
 
-	$('.extrauserfield').load(function() {
+	$(".extrauserfield").load(function() {
 		$(this).val($("#id_form-0-user").val());
 	});
 
 	$("#id_form-0-user").change(function() {
-		$('.extrauserfield').val($(this).val());
+		$(".extrauserfield").val($(this).val());
 	});
 
-//	$("#checkin-form").submit(function() {
-//
-//	});
+	$("body").delegate(".autohide-label", "click", (function() {
+		var field = $(this).attr("for");
+		
+		$("#" + field).toggleClass("hidden");
+
+	}));
+
+
 });
