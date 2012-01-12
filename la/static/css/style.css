@@ -151,12 +151,12 @@ time {
  *  Header stuff
  */
 
-nav li {
+header nav li {
 	display: inline-block;
 	margin-left:1em;
 }
 
-#header {
+header {
 
 	position:relative;
 	background:#203E42;
@@ -164,7 +164,7 @@ nav li {
 
 }
 
-#header > h1 {
+header > h1 {
 
 	margin-bottom:1em;
 
@@ -312,15 +312,16 @@ article {
 
 }
 
-#sidebar > ul {
+#sidebar > ul,#sidebar nav > ul {
 
 	margin:0.5em 0;
 
 }
 
-.tree li {
 
-	margin: 0.2em 0;
+.tree li, nav li {
+
+	margin: 0.3em 0;
 }
 
 .subtree > li {

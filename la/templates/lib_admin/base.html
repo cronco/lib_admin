@@ -10,7 +10,7 @@
 		{% block extraScripts %}{% endblock extraScripts %}
 	</head>
 	<body class="{% block bodyclass %}{% endblock %}">
-		<div id="header" class="box">
+		<header class="box">
 			{% block branding %}<h1><a href="{{ base_url }}">{{library.name}}</a></h1>{% endblock %}
 			<nav>
 				<ul>
@@ -46,7 +46,7 @@
 				<input name="search" type="text" placeholder="Search by ISBN, author or name" value="{{search}}"/>
 				<input type="submit" value="Search" />
 			</form>
-		</div>
+		</header>
 		<div id="content">
 			{% block content %}
 			{% endblock content %}
@@ -54,6 +54,31 @@
 		<div id="sidebar" class="box">
 			{% block sidebar %}
 			{% endblock sidebar %}
+			{% if user.is_staff %}
+			<nav>
+			<h3>Admin links</h3>
+				<ul>
+					<li>
+						<a href="{% url checkout %}">Checkout</a>
+					</li>
+					<li>
+						<a href="{% url checkin %}">Checkin</a>
+					</li>
+					<li>
+						<a href="{% url addbook %}">Add book</a>
+					</li>
+					<li>
+						<a href="{#% url adduser %#}">Add user</a>
+					</li>
+					<li>
+						<a href="{#% url adduser %#}">Checkouts</a>
+					</li>
+					<li>
+						<a href="{#% url adduser %#}">Users</a>
+					</li>
+				</ul>
+	</nav>
+	{% endif %}
 		</div>
 	</body>
 </html>

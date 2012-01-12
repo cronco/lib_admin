@@ -5,15 +5,15 @@
 
 	{% if author %}
 	<article class="box">
-	<h1>{{author.name}}</h1>
-	{{author.bio|safe|linebreaks}}
+	<h1>{{ author.name }}</h1>
+	{{ author.bio|safe|linebreaks }}
 	Books by this author:
 	</article>
 	{% else %}
 		{% if genre %}
 	<article class="box">
 	<h1>{{genre.name}}</h1>
-	{{genre.description|safe|linebreaks}}
+	{{ genre.description|safe|linebreaks }}
 	Books by this genre:
 	</article>
 		{% endif %}
