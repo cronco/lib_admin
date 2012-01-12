@@ -199,6 +199,18 @@ def checkin(request):
 	c['context'] = 'checkin'
 	return render_to_response('lib_admin/checkin.html', {}, c)
 
+def add_book(request):
+	c = RequestContext(request, dictionary)
+	if request.method == "POST":
+		form  = BookForm(data = request.POST)
+		if form.is_valid():
+			form.save()
+	else:
+		form = BookForm()
+	c['form'] = form
+
+	return render_to_response('forms/general.html', {}, c)
+
 def autocomplete(request):
 	
 	if 'book' in request.GET:

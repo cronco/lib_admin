@@ -39,14 +39,14 @@ class Publisher (models.Model):
 class Book(models.Model):
 	isbn = models.CharField('ISBN code', max_length = 20, unique = True)
 	name = models.CharField('book title', max_length = 200)
-	pub_date = models.DateField('publishing date', null = True)
+	pub_date = models.DateField('publishing date', null = True, blank = True)
 	add_date = models.DateField('added to library date', auto_now_add = True)
 	copies = models.IntegerField('number of available copies')
 	cover = models.ImageField('book cover',upload_to = 'covers/', null=True, blank=True)
 	preview = models.FileField('book preview', upload_to = 'previews/', null=True, blank=True)
 	synopsis = models.TextField('book synopsis, description', blank=True)
-	genres = models.ManyToManyField(Genre, null=True)
-	publisher = models.ForeignKey(Publisher) 
+	genres = models.ManyToManyField(Genre, null = True)
+	publisher = models.ForeignKey(Publisher, null = True, blank = True) 
 	authors = models.ManyToManyField(Author)
 
 	def __unicode__(self):

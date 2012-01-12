@@ -38,7 +38,7 @@ class CheckoutForm(ModelForm):
 		super(CheckoutForm, self).__init__(*args, **kwargs)
 		self.fields['book'].widget = AutoCompleteWidget(attrs = {'data-search' :
 			"book", 
-			'data-role' : 'checkout-book'})
+			"data-role" : "checkout-book"})
 		self.fields['user'].widget = AutoCompleteWidget(attrs = 
 								{'data-search' : "user",
 								'data-role' : "checkout-user"})
@@ -77,3 +77,7 @@ class AutoUserForm(Form):
 					}))
 
 
+class BookForm(ModelForm):
+
+	class Meta:
+		model = Book
