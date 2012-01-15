@@ -33,6 +33,8 @@ urlpatterns = patterns('la.views',
 		url(r'^admins/?$', 'admin', name='admin'),
 		url(r'^admins/checkout/?$', 'checkout', name='checkout'),
 		url(r'^admins/checkin/?$', 'checkin', name='checkin'),
+		url(r'^admins/register/?$', 'register', name='register'),
+		url(r'^admins/user/edit/(?P<user_id>\d+)/?$', 'edit_user', name='edit_user'),
 		#CRUD crap
 		url(r'^admins/book/add/?$', 'add_book', name='add_book'),
 		url(r'^admins/book/edit/(?P<book_id>\d+)/?$', 'edit_book', name='edit_book'),

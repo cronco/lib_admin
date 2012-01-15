@@ -3,8 +3,9 @@ from django.utils import simplejson
 from django.core import serializers
 from django.db.models import Q
 from django.conf import settings
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm
 from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.template import RequestContext, Context, loader
 from django.shortcuts import render_to_response, redirect
 from django.core.paginator import Paginator
@@ -139,10 +140,39 @@ def login_view(request):
 	c['form'] = form
 	return render_to_response('lib_admin/login.html', {}, c)
 
+@login_required
 def logout_view(request):
 	logout(request)
 	return redirect('home')
 
+
+def register(request):
+	c = RequestContext(request, dictionary)
+	if request.method == "POST":
+		form = UserCreationForm(data = request.POST)
+		if form.is_valid():
+			u = form.save()
+			u.user_permissions.add('la.checkout_book')
+			redirect('edit_user', user_id = u.id)
+	else:
+		form = UserCreationForm()
+	c['form'] = form
+	return render_to_response('forms/general.html', {}, c)
+
+@user_passes_test(lambda u: u.is_staff)
+def edit_user(request, user_id = 0):
+	c = RequestContext(request, dictionary)
+	u = User.objects.get(pk = user_id)
+	if request.method == "POST":
+		form = UserChangeForm(data = request.POST, instance = u)
+		if form.is_valid():
+			u = form.save()
+	else:
+		form = UserChangeForm(instance = u)
+	c['form'] = form
+	return render_to_response('forms/general.html', {}, c)
+
+@login_required
 def user_checkouts(request, user = None):
 	c = RequestContext(request, dictionary)
 	checkouts = Checkout.objects.filter(Q(user = user or request.user.id)).order_by('checkout_date')
@@ -151,10 +181,12 @@ def user_checkouts(request, user = None):
 	c['checkouts'] = checkouts
 	return render_to_response('lib_admin/checkouts.html', {}, c)
 
+@user_passes_test(lambda u: u.is_staff)
 def admin(request):
 	c = RequestContext(request, dictionary)
 	return render_to_response('lib_admin/admin.html', {}, c)
 
+@user_passes_test(lambda u: u.is_staff)
 def checkout(request):
 	c = RequestContext(request, dictionary)
 	CheckoutFormSet = formset_factory(CheckoutForm)
@@ -172,6 +204,7 @@ def checkout(request):
 	c['context'] = 'checkout'
 	return render_to_response('lib_admin/checkout.html', {}, c)
 
+@user_passes_test(lambda u: u.is_staff)
 def checkin(request):
 	c = RequestContext(request, dictionary)
 	CheckinFormSet = modelformset_factory(Checkout, CheckinForm)
@@ -199,6 +232,7 @@ def checkin(request):
 	c['context'] = 'checkin'
 	return render_to_response('lib_admin/checkin.html', {}, c)
 
+@user_passes_test(lambda u: u.is_staff)
 def add_book(request):
 	c = RequestContext(request, dictionary)
 	if request.method == "POST":
@@ -211,6 +245,7 @@ def add_book(request):
 
 	return render_to_response('forms/general.html', {}, c)
 
+@user_passes_test(lambda u: u.is_staff)
 def edit_book(request, book_id = 0):
 	c = RequestContext(request, dictionary)
 	if book_id:
