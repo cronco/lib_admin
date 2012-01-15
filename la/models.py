@@ -37,7 +37,7 @@ class Publisher (models.Model):
 		return self.name
 
 class Book(models.Model):
-	isbn = models.CharField('ISBN code', max_length = 20, unique = True)
+	isbn = models.CharField('ISBN code', max_length = 20, unique = True, blank = True, null = True)
 	name = models.CharField('book title', max_length = 200)
 	pub_date = models.DateField('publishing date', null = True, blank = True)
 	add_date = models.DateField('added to library date', auto_now_add = True)

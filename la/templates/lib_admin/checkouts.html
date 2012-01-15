@@ -20,8 +20,7 @@
 		{% endifchanged %}
 
 		<div class="inner">
-			<a href="{{ checkout.book.get_absolute_url
-				}}">{{checkout.book.name}}</a> -
+			<a href="{{ checkout.book.get_absolute_url }}">{{checkout.book.name}}</a> -
 			{% if checkout.return_date %}
 			<span>Returned on {{ checkout.return_date|date:"F dS Y" }}</span>
 			{% else %}

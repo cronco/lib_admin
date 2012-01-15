@@ -19,7 +19,9 @@
 		<a href="{{ book.authors.all.0.get_absolute_url}}">{{ book.authors.all.0.name }}</a>
 		{% endif %}
 	</h2>
+	{% if book.publisher %}
 	<h3>{{book.publisher}}</h3>
+	{% endif %}
 		{% if user.is_staff %}
 			<a href="{% url edit_book book.id %}">Edit book</a>
 		{% endif %}
