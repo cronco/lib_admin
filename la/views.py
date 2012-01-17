@@ -4,6 +4,7 @@ from django.core import serializers
 from django.db.models import Q
 from django.conf import settings
 from django.contrib.auth import login, authenticate, logout
+from django.core.files.uploadedfile import SimpleUploadedFile
 from django.contrib.auth.models import Permission
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm
 from django.contrib.auth.decorators import login_required, user_passes_test
@@ -163,6 +164,20 @@ def register(request):
 	c['form'] = form
 	return render_to_response('forms/general.html', {}, c)
 
+@login_required
+def user_profile(request):
+	c = RequestContext(request, dictionary)
+	u = User.objects.get(pk = request.user.id)
+	if request.method == "POST":
+		form = UserSelfChangeForm(data = request.POST, instance = u)
+		if form.is_valid():
+			u = form.save()
+	else:
+		form = UserSelfChangeForm(instance = u)
+	c['form'] = form
+	return render_to_response('forms/general.html', {}, c)
+
+
 @user_passes_test(lambda u: u.is_staff)
 def create_user(request):
 	c = RequestContext(request, dictionary)
@@ -180,7 +195,7 @@ def create_user(request):
 	c['form'] = form
 	return render_to_response('forms/general.html', {}, c)
 
-@user_passes_test(lambda u: u.is_superuser)
+@user_passes_test(lambda u: u.is_staff)
 def edit_user(request, user_id = 0):
 	c = RequestContext(request, dictionary)
 	u = User.objects.get(pk = user_id)
@@ -272,7 +287,7 @@ def edit_book(request, book_id = 0):
 	if book_id:
 		b = Book.objects.get(pk = book_id)
 		if request.method == "POST":
-			form  = BookForm(data = request.POST, instance = b)
+			form  = BookForm(data = request.POST, files = request.FILES, instance = b)
 			if form.is_valid():
 				form.save()
 		else:
@@ -308,6 +323,7 @@ def autocomplete(request):
 		u = User.objects.filter(
 					Q(last_name__istartswith=request.GET['user']) |
 					Q(first_name__istartswith=request.GET['user']) |
+					Q(username__istartswith=request.GET['user']) |
 					Q(email__istartswith=request.GET['user']) 
 				).order_by('last_name')
 

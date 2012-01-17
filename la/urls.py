@@ -30,6 +30,7 @@ urlpatterns = patterns('la.views',
 		url(r'^logout/?$', 'logout_view', name='logout'),
 		url(r'^my-checkouts/?$', 'user_checkouts', name='user_checkouts'),
 		url(r'^register/?$', 'register', name='register'),
+		url(r'^my-profile/?$', 'user_profile', name='user_profile'),
 		# Finally, admin stuff
 		url(r'^admins/?$', 'admin', name='admin'),
 		url(r'^admins/checkout/?$', 'checkout', name='checkout'),

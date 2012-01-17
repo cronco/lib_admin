@@ -1,6 +1,6 @@
 from django.forms import Form, ModelForm, TextInput, MultiWidget, HiddenInput, CheckboxInput, ModelChoiceField, ValidationError
 import isbn
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from la.models import *
 
 class AutoCompleteWidget(MultiWidget):
@@ -82,11 +82,11 @@ class AutoUserForm(Form):
 class BookForm(ModelForm):
 
 	def clean_isbn(self):
-		isbn = self.cleaned_data["isbn"]
-		if isbn:
-			if not isbn.isValid(isbn):
+		isbn_val = self.cleaned_data["isbn"]
+		if isbn_val:
+			if not isbn.isValid(isbn_val):
 				raise ValidationError("The isbn you entered is not valid")
-		return isbn
+		return isbn_val
 
 	class Meta:
 		model = Book
@@ -98,3 +98,9 @@ class CompleteUserCreationForm(UserCreationForm):
 		model = User
 		fields = ("username", "first_name", "last_name", "email", )
 
+class UserSelfChangeForm(UserChangeForm):
+
+
+	class Meta:
+		model = User
+		fields = ("username", "first_name", "last_name", "email", )

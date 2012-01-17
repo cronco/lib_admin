@@ -2,7 +2,11 @@
 
 {% block content %}
 	<div class="box">
-		<form action="" method="POST" >
+	{% if form.is_multipart %}
+		<form action="" method="POST" enctype="multipart/form-data">
+		{% else %}
+		<form action="" method="POST">
+		{% endif %}
 			{% csrf_token %}
 			{{ form.as_p }}
 			{{form.errors}}
