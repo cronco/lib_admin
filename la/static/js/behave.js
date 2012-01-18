@@ -33,7 +33,7 @@ jQuery(document).ready(function($) {
 				if(term_name == 'book')
 					search_object['user_id'] = $("#id_form-0-user_1").val();
 				search_object[term_name] = term;
-				$.getJSON('autocomplete', search_object,
+				$.getJSON('http://' + window.location.host + '/admins/autocomplete', search_object,
 					function(data, status, xhr) {
 						response( $.map(data, function(item) {
 							if (term_name == 'book') {
@@ -64,12 +64,27 @@ jQuery(document).ready(function($) {
 			$(this).autocomplete("option",  'select', function(event, ui) {
 
 				$(this).next().val(ui.item.id);
-				$.get('autocomplete',{
+				$.get('http://' + window.location.host + '/admins/autocomplete',{
 					  user_id : ui.item.id,
 					 checkouts: 1
 				 }, function(data, status, req) {
 						$("#added-forms").html(data);
 						$("#added-forms .autohidden").addClass("hidden");
+				 });
+			});
+		}
+		
+		if($(this).hasClass('edit-user')) {
+
+			$(this).autocomplete("option",  'select', function(event, ui) {
+
+				$(this).next().val(ui.item.id);
+				$.get('http://' + window.location.host + '/admins/autocomplete',{
+					  user_id : ui.item.id,
+					 edit_form: 1
+				 }, function(data, status, req) {
+						$("#added-form").html(data);
+						$("#added-form .autohidden").addClass("hidden");
 				 });
 			});
 		}

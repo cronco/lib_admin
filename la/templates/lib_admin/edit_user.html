@@ -1,0 +1,27 @@
+{% extends "lib_admin/base_admin.html" %}
+
+{% block extraScripts %}
+	{{ block.super }}
+	{{ form.media }}
+{% endblock extraScripts %}
+
+
+{% block content %}
+
+<div class="box">
+	{{valid}}
+	{% for error in errors %}
+		{{ error }}
+	{% endfor %}
+		<div id="edit-user-form">
+			{{ form }}
+		</div>
+	<form action="" method="POST" class="edit-user">
+		{% csrf_token %}
+			<div id="added-form"></div>
+		<input type="submit" value="Submit" />
+		
+	</form>
+</div>
+
+{% endblock content %}

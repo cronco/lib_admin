@@ -78,7 +78,6 @@ class AutoUserForm(Form):
 					"class" : "checkin-user",
 					}))
 
-
 class BookForm(ModelForm):
 
 	def clean_isbn(self):

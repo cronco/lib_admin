@@ -198,15 +198,24 @@ def create_user(request):
 @user_passes_test(lambda u: u.is_staff)
 def edit_user(request, user_id = 0):
 	c = RequestContext(request, dictionary)
-	u = User.objects.get(pk = user_id)
-	if request.method == "POST":
-		form = UserChangeForm(data = request.POST, instance = u)
-		if form.is_valid():
-			u = form.save()
+	auto_form = AutoUserForm()
+	auto_form.fields['user'].widget.attrs = {
+						"data-role" : "edit-user",
+						"class" : "edit-user autocomplete"
+						}
+	if user_id:
+		u = User.objects.get(pk = user_id)
+		if request.method == "POST":
+			form = UserChangeForm(data = request.POST, instance = u)
+			if form.is_valid():
+				u = form.save()
+		else:
+			form = UserChangeForm(instance = u)
 	else:
-		form = UserChangeForm(instance = u)
-	c['form'] = form
-	return render_to_response('forms/general.html', {}, c)
+		form = UserChangeForm()
+	c['form'] = auto_form
+	c['big-form'] = form
+	return render_to_response('lib_admin/edit_user.html', {}, c)
 
 @login_required
 def user_checkouts(request, user = None):
@@ -272,7 +281,7 @@ def checkin(request):
 def add_book(request):
 	c = RequestContext(request, dictionary)
 	if request.method == "POST":
-		form  = BookForm(data = request.POST)
+		form  = BookForm(data = request.POST, files = request.FILES)
 		if form.is_valid():
 			form.save()
 	else:
@@ -344,4 +353,11 @@ def autocomplete(request):
 		c.update({'checkouts' : zip(query, forms), 'formset':
 			forms.management_form})
 		return render_to_response('forms/checkin.html', {}, c)
+
+	if 'edit_form' in request.GET:
+		u = User.objects.get(pk = request.GET['user_id'])
+		form = UserChangeForm(instance = u)
+		c = RequestContext(request, dictionary)
+		c['form'] = form
+		return render_to_response('forms/general_ajax.html', {}, c)
 
