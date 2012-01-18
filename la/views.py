@@ -203,8 +203,8 @@ def edit_user(request, user_id = 0):
 						"data-role" : "edit-user",
 						"class" : "edit-user autocomplete"
 						}
-	if user_id:
-		u = User.objects.get(pk = user_id)
+	if request.method == "POST" and (user_id or 'user_1' in request.POST):
+		u = User.objects.get(pk = user_id or request.POST['user_1'])
 		if request.method == "POST":
 			form = UserChangeForm(data = request.POST, instance = u)
 			if form.is_valid():
@@ -305,6 +305,75 @@ def edit_book(request, book_id = 0):
 
 	return render_to_response('forms/general.html', {}, c)
 
+@user_passes_test(lambda u: u.is_staff)
+def add_author(request):
+	c = RequestContext(request, dictionary)
+	if request.method == "POST":
+		form  = AuthorForm(data = request.POST, files = request.FILES)
+		if form.is_valid():
+			form.save()
+	else:
+		form = AuthorForm()
+	c['form'] = form
+
+	return render_to_response('forms/general.html', {}, c)
+
+@user_passes_test(lambda u: u.is_staff)
+def edit_author(request, author_id = 0):
+	c = RequestContext(request, dictionary)
+	if author_id:
+		b = Author.objects.get(pk = author_id)
+		if request.method == "POST":
+			form  = AuthorForm(data = request.POST, files = request.FILES, instance = b)
+			if form.is_valid():
+				form.save()
+		else:
+			form = AuthorForm(instance = b)
+		c['form'] = form
+
+	return render_to_response('forms/general.html', {}, c)
+
+@user_passes_test(lambda u: u.is_staff)
+def add_genre(request):
+	c = RequestContext(request, dictionary)
+	if request.method == "POST":
+		form  = GenreForm(data = request.POST, files = request.FILES)
+		if form.is_valid():
+			form.save()
+	else:
+		form = GenreForm()
+	c['form'] = form
+
+	return render_to_response('forms/general.html', {}, c)
+
+@user_passes_test(lambda u: u.is_staff)
+def edit_genre(request, genre_id = 0):
+	c = RequestContext(request, dictionary)
+	if genre_id:
+		b = Genre.objects.get(pk = genre_id)
+		if request.method == "POST":
+			form  = GenreForm(data = request.POST, files = request.FILES, instance = b)
+			if form.is_valid():
+				form.save()
+		else:
+			form = GenreForm(instance = b)
+		c['form'] = form
+
+	return render_to_response('forms/general.html', {}, c)
+
+
+@user_passes_test(lambda u: u.is_staff)
+def edit_settings(request):
+	c = RequestContext(request, dictionary)
+	if request.method == "POST":
+		form = SettingsForm(instance = l, data = request.POST)
+		if form.is_valid():
+			form.save()
+	else:
+		form = SettingsForm(instance = l)
+	c['form'] = form
+	return render_to_response('forms/general.html', {}, c)
+	
 def autocomplete(request):
 	
 	if 'book' in request.GET:

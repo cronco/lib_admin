@@ -42,6 +42,12 @@ urlpatterns = patterns('la.views',
 		url(r'^admins/book/add/?$', 'add_book', name='add_book'),
 		url(r'^admins/book/edit/(?P<book_id>\d+)/?$', 'edit_book', name='edit_book'),
 
+		url(r'^admins/author/add/?$', 'add_author', name='add_author'),
+		url(r'^admins/author/edit/(?P<author_id>\d+)/?$', 'edit_author', name='edit_author'),
+		url(r'^admins/genre/add/?$', 'add_genre', name='add_genre'),
+		url(r'^admins/genre/edit/(?P<genre_id>\d+)/?$', 'edit_genre', name='edit_genre'),
+		url(r'^admins/settings/edit/?$', 'edit_settings', name='edit_settings'),
+
 		# API stuff (feels good sayin that)
 		url(r'^admins/autocomplete/?$', 'autocomplete'),
 

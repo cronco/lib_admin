@@ -90,6 +90,16 @@ class BookForm(ModelForm):
 	class Meta:
 		model = Book
 
+class AuthorForm(ModelForm):
+
+	class Meta:
+		model = Author
+
+class GenreForm(ModelForm):
+
+	class Meta:
+		model = Genre
+
 class CompleteUserCreationForm(UserCreationForm):
 
 
@@ -103,3 +113,9 @@ class UserSelfChangeForm(UserChangeForm):
 	class Meta:
 		model = User
 		fields = ("username", "first_name", "last_name", "email", )
+
+
+class SettingsForm(ModelForm):
+
+	class Meta:
+		model = Library

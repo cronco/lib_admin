@@ -21,7 +21,7 @@ class Author(models.Model):
 class Genre(models.Model):
 	name = models.CharField(max_length = 100)
 	description = models.CharField(max_length = 250, blank=True)
-	parent_genre = models.ForeignKey('self', null = True, default = 0)
+	parent_genre = models.ForeignKey('self', null = True, blank = True)
 
 	def __unicode__(self):
 		return self.name

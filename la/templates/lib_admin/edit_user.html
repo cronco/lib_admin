@@ -13,10 +13,10 @@
 	{% for error in errors %}
 		{{ error }}
 	{% endfor %}
+	<form action="" method="POST" class="edit-user">
 		<div id="edit-user-form">
 			{{ form }}
 		</div>
-	<form action="" method="POST" class="edit-user">
 		{% csrf_token %}
 			<div id="added-form"></div>
 		<input type="submit" value="Submit" />
